@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Board of Directors — Stardust Community Players</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0d1b2e;
+    --navy-mid: #152540;
+    --navy-light: #1e3358;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --cream: #faf7f0;
+    --text-dark: #1a1a2e;
+    --text-muted: #5a6a82;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13, 27, 46, 0.97);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 68px;
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { height: 44px; width: 44px; object-fit: contain; border-radius: 50%; }
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--gold-light); letter-spacing: 0.04em; line-height: 1.2;
+  }
+  .nav-logo-text span { display: block; font-weight: 400; font-size: 0.75rem; color: rgba(232,201,122,0.65); letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+
+  /* PAGE HERO */
+  .page-hero {
+    min-height: 44vh;
+    background: var(--navy);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    padding: 8rem 2rem 4.5rem;
+    position: relative; overflow: hidden; text-align: center;
+  }
+  .stars {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 65% 28%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 15%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 55% 55%, rgba(201,168,76,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 65%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 75%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 50%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 85%, rgba(255,255,255,0.35) 0%, transparent 100%);
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem; position: relative; z-index: 2;
+  }
+  .page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700;
+    color: #fff; line-height: 1.05;
+    position: relative; z-index: 2; margin-bottom: 1rem;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+    color: rgba(255,255,255,0.45);
+    position: relative; z-index: 2; margin-bottom: 2rem;
+    max-width: 500px;
+  }
+  .hero-rule {
+    width: 80px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    position: relative; z-index: 2;
+  }
+
+  /* LEADERSHIP STRIP */
+  .leadership-strip {
+    background: var(--navy-mid);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .strip-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    gap: 3rem; flex-wrap: wrap;
+  }
+  .strip-item { text-align: center; }
+  .strip-item .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 600; color: #fff;
+  }
+  .strip-item .role {
+    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); margin-top: 2px;
+  }
+  .strip-sep { width: 1px; height: 32px; background: rgba(201,168,76,0.2); }
+
+  /* BOARD GRID */
+  .board-section {
+    padding: 6rem 2rem;
+    background: var(--cream);
+  }
+  .board-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 600;
+    color: var(--navy); line-height: 1.2; margin-bottom: 1rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .rule { width: 50px; height: 2px; background: var(--gold); margin-bottom: 3.5rem; }
+
+  /* OFFICER CARDS (top row — larger) */
+  .officers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .officer-card {
+    background: #fff;
+    border: 1px solid rgba(13,27,46,0.1);
+    overflow: hidden;
+    transition: box-shadow 0.25s, border-color 0.25s;
+  }
+  .officer-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 6px 32px rgba(201,168,76,0.1);
+  }
+  .card-photo {
+    width: 100%; aspect-ratio: 1/1;
+    background: var(--navy-mid);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .card-photo::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 25%, rgba(255,255,255,0.12) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 15%, rgba(255,255,255,0.08) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 50% 70%, rgba(201,168,76,0.12) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 80%, rgba(255,255,255,0.1) 0%, transparent 100%);
+  }
+  .card-initials {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 700;
+    color: rgba(201,168,76,0.4);
+    position: relative; z-index: 1; line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .photo-hint {
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    position: relative; z-index: 1;
+  }
+  .card-body { padding: 1.75rem; }
+  .card-role {
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.4rem;
+  }
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600; color: var(--navy);
+    margin-bottom: 1rem; line-height: 1.2;
+  }
+  .card-bio {
+    font-size: 0.88rem; line-height: 1.8; color: var(--text-muted);
+  }
+
+  /* DIRECTORS ROW (smaller cards, 4-across) */
+  .directors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .director-card {
+    background: var(--navy);
+    overflow: hidden;
+    transition: box-shadow 0.25s;
+  }
+  .director-card:hover {
+    box-shadow: 0 6px 32px rgba(201,168,76,0.12);
+  }
+  .dir-photo {
+    width: 100%; aspect-ratio: 1/1;
+    background: var(--navy-light);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .dir-photo::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 25% 30%, rgba(255,255,255,0.1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 72% 20%, rgba(255,255,255,0.07) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 50% 65%, rgba(201,168,76,0.1) 0%, transparent 100%);
+  }
+  .dir-initials {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 700;
+    color: rgba(201,168,76,0.35);
+    position: relative; z-index: 1; line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .dir-body { padding: 1.25rem 1.25rem 1.5rem; }
+  .dir-role {
+    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.35rem;
+  }
+  .dir-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 600; color: #fff;
+    margin-bottom: 0.75rem; line-height: 1.2;
+  }
+  .dir-bio {
+    font-size: 0.82rem; line-height: 1.75; color: rgba(255,255,255,0.55);
+  }
+
+  /* STAFF SECTION */
+  .staff-section {
+    background: #f5eedc;
+    padding: 5rem 2rem;
+  }
+  .staff-inner { max-width: 1100px; margin: 0 auto; }
+  .staff-card {
+    display: flex; align-items: center; gap: 2rem;
+    background: #fff;
+    border: 1px solid rgba(13,27,46,0.1);
+    padding: 2rem;
+    max-width: 480px;
+  }
+  .staff-photo {
+    width: 90px; height: 90px; flex-shrink: 0;
+    background: var(--navy-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 700;
+    color: rgba(201,168,76,0.5);
+  }
+  .staff-role {
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.25rem;
+  }
+  .staff-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600; color: var(--navy);
+  }
+  .staff-note {
+    font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.6;
+  }
+
+  /* JOIN CTA */
+  .join-cta {
+    background: var(--navy);
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+  .join-cta h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 600;
+    color: #fff; margin-bottom: 1rem;
+  }
+  .join-cta h2 em { font-style: italic; color: var(--gold-light); }
+  .join-cta p {
+    font-size: 1rem; color: rgba(255,255,255,0.55);
+    max-width: 520px; margin: 0 auto 2rem; line-height: 1.8;
+  }
+  .btn-gold {
+    display: inline-block; padding: 0.9rem 2.4rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'Jost', sans-serif; font-size: 0.8rem;
+    font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-gold:hover { background: var(--gold-light); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy); padding: 3rem 2rem; text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700;
+    color: var(--gold-light); letter-spacing: 0.04em; margin-bottom: 0.5rem;
+  }
+  .footer-tagline {
+    font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); margin-bottom: 1.5rem;
+  }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .footer-links a {
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 1000px) {
+    .officers-grid { grid-template-columns: repeat(2, 1fr); }
+    .directors-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .officers-grid { grid-template-columns: 1fr; }
+    .directors-grid { grid-template-columns: 1fr; }
+    .strip-sep { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="Gemini_Generated_Image_.png" alt="Stardust Community Players logo" onerror="this.style.display='none'">
+    <div class="nav-logo-text">
+      Stardust Community Players
+      <span>Danvers, MA</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#mission">About</a></li>
+    <li><a href="michael_armento.html">Michael N. Armento</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="board_of_directors.html" class="active">Board</a></li>
+    <li><a href="join_us.html">Join Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="stars"></div>
+  <p class="hero-eyebrow">The People Behind the Curtain</p>
+  <h1>Board of <em>Directors</em></h1>
+  <p class="hero-sub">Volunteers united by a love of theater and the communities it builds.</p>
+  <div class="hero-rule"></div>
+</div>
+
+<!-- QUICK LEADERSHIP STRIP -->
+<div class="leadership-strip">
+  <div class="strip-inner">
+    <div class="strip-item"><div class="name">Becky Lemp Ankiewicz</div><div class="role">President &amp; Founder</div></div>
+    <div class="strip-sep"></div>
+    <div class="strip-item"><div class="name">Dan Murphy</div><div class="role">Vice President</div></div>
+    <div class="strip-sep"></div>
+    <div class="strip-item"><div class="name">Christine Manuel Connors</div><div class="role">Secretary</div></div>
+    <div class="strip-sep"></div>
+    <div class="strip-item"><div class="name">Sean Batchelder</div><div class="role">Treasurer</div></div>
+  </div>
+</div>
+
+<!-- OFFICER CARDS -->
+<section class="board-section">
+  <div class="board-inner">
+
+    <p class="section-label">Leadership</p>
+    <h2 class="section-title">Officers &amp; <em>Founders</em></h2>
+    <div class="rule"></div>
+
+    <div class="officers-grid">
+
+      <!-- Becky -->
+      <div class="officer-card fade-up">
+        <div class="card-photo">
+          <div class="card-initials">BLA</div>
+          <div class="photo-hint">Photo placeholder</div>
+        </div>
+        <div class="card-body">
+          <div class="card-role">President &amp; Founder</div>
+          <div class="card-name">Becky Lemp Ankiewicz</div>
+          <p class="card-bio">Becky is thrilled to see her dream of creating a community theater to honor Mike Armento finally come to fruition. Her first introduction to theater was in the early 1980s, when she would tag along to rehearsals with her older sister and discovered the magical world of the stage. Uncle Mike was a mentor, friend, and teacher of all things theater. Becky has been a lifelong resident of Danvers.</p>
+        </div>
+      </div>
+
+      <!-- Dan -->
+      <div class="officer-card fade-up">
+        <div class="card-photo">
+          <div class="card-initials">DM</div>
+          <div class="photo-hint">Photo placeholder</div>
+        </div>
+        <div class="card-body">
+          <div class="card-role">Vice President</div>
+          <div class="card-name">Dan Murphy</div>
+          <p class="card-bio">Dan started with The Academy Theatre in the fall of 1984, at the start of his sophomore year at Danvers High School. During his three years he performed in <em>The Pirates of Penzance</em>, <em>Sweeney Todd</em>, <em>The Sound of Music</em>, <em>The Happy Time</em>, <em>Little Mary Sunshine</em>, and <em>My Sister Eileen</em>. An Air Force veteran, he currently works in Human Resources for the VA and is happy to be reuniting with good friends after almost 30 years away from home.</p>
+        </div>
+      </div>
+
+      <!-- Christine -->
+      <div class="officer-card fade-up">
+        <div class="card-photo">
+          <div class="card-initials">CMC</div>
+          <div class="photo-hint">Photo placeholder</div>
+        </div>
+        <div class="card-body">
+          <div class="card-role">Secretary</div>
+          <div class="card-name">Christine Manuel Connors</div>
+          <p class="card-bio">Christine is thrilled to serve on the Board of Directors for Stardust Community Players. A graduate of Ithaca College's Class of 1994 with a B.S. in Theatre Arts Management, Christine brings a foundational passion for arts leadership and community engagement to the role. Their lifelong love for the stage was first ignited as a student in the legendary Danvers High School Academy Theatre, mentored by the amazing director Bill Endslow and honoring the inspiring legacy of its founder, Michael N. "Uncle Mike" Armento. Today, Christine is dedicated to fostering that same spirit of artistic excellence and creative community for local audiences and artists alike.</p>
+        </div>
+      </div>
+
+      <!-- Sean -->
+      <div class="officer-card fade-up">
+        <div class="card-photo">
+          <div class="card-initials">SB</div>
+          <div class="photo-hint">Photo placeholder</div>
+        </div>
+        <div class="card-body">
+          <div class="card-role">Treasurer</div>
+          <div class="card-name">Sean Batchelder</div>
+          <p class="card-bio">Bio coming soon.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DIRECTORS AT LARGE + TRUSTEE -->
+    <p class="section-label" style="margin-top:3rem;">Directors &amp; Trustees</p>
+    <h2 class="section-title">The Rest of the <em>Team</em></h2>
+    <div class="rule"></div>
+
+    <div class="directors-grid">
+
+      <!-- Ken -->
+      <div class="director-card fade-up">
+        <div class="dir-photo">
+          <div class="dir-initials">KA</div>
+          <div class="photo-hint" style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.18);position:relative;z-index:1;">Photo placeholder</div>
+        </div>
+        <div class="dir-body">
+          <div class="dir-role">Director at Large</div>
+          <div class="dir-name">Ken Ankiewicz</div>
+          <p class="dir-bio">Ken has always loved going to the theater. In 2019 his wife convinced him to help out with a production she was a part of — and he ended up on stage instead of building sets. He is so happy to be a part of this wonderful new theater. Although he never met Mike Armento, he feels like he knows him from all of the wonderful stories he has heard over the years.</p>
+        </div>
+      </div>
+
+      <!-- Ellen -->
+      <div class="director-card fade-up">
+        <div class="dir-photo">
+          <div class="dir-initials">EG</div>
+          <div class="photo-hint" style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.18);position:relative;z-index:1;">Photo placeholder</div>
+        </div>
+        <div class="dir-body">
+          <div class="dir-role">Director at Large</div>
+          <div class="dir-name">Ellen "Dugas" Gasser</div>
+          <p class="dir-bio">Ellen is excited to be part of Stardust Community Players. Uncle Mike was the reason Ellen got into theatre. She still remembers her first day at DHS Academy Theatre — at 8 years old she helped her dad stack bricks for the set of <em>My Sister Eileen</em>. Staring out at the actors on stage, she was hooked. Ellen still has the hat that Uncle Mike gave her before he passed. She continued in theatre throughout high school and college, then worked for Walt Disney Studios Film Marketing for 11 years before moving back home to raise her family.</p>
+        </div>
+      </div>
+
+      <!-- JR -->
+      <div class="director-card fade-up">
+        <div class="dir-photo">
+          <div class="dir-initials">JR</div>
+          <div class="photo-hint" style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.18);position:relative;z-index:1;">Photo placeholder</div>
+        </div>
+        <div class="dir-body">
+          <div class="dir-role">Trustee</div>
+          <div class="dir-name">J.R. Kachinski</div>
+          <p class="dir-bio">J.R. was introduced to live theater as a child and welcomes the opportunity to introduce it to the next generation.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STAFF -->
+<section class="staff-section">
+  <div class="staff-inner">
+    <p class="section-label">Our Team</p>
+    <h2 class="section-title" style="margin-bottom:0.75rem;">Behind the <em>Scenes</em></h2>
+    <div class="rule"></div>
+    <div class="staff-card fade-up">
+      <div class="staff-photo">S</div>
+      <div>
+        <div class="staff-role">Web Designer &amp; Social Media Coordinator</div>
+        <div class="staff-name">Sophia</div>
+        <p class="staff-note">Bringing Stardust to life online and keeping our community connected.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN CTA -->
+<div class="join-cta">
+  <h2>Want to Help <em>Shape</em> What We Build?</h2>
+  <p>Stardust Community Players is a young organization and there are many ways to get involved — on stage, behind the scenes, or in leadership. We'd love to hear from you.</p>
+  <a href="index.html#contact" class="btn-gold">Get In Touch</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Stardust Community Players</div>
+  <div class="footer-tagline">Honoring a Legacy Through the Performing Arts · Danvers, MA</div>
+  <div class="footer-links">
+    <a href="index.html#mission">About</a>
+    <a href="michael_armento.html">Michael N. Armento</a>
+    <a href="board_of_directors.html">Board of Directors</a>
+    <a href="events.html">Events</a>
+    <a href="join_us.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 Stardust Community Players · Non-profit · 978-335-5230 · stardustcommunityplayers@gmail.com</div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

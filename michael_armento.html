@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michael N. Armento — Stardust Community Players</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0d1b2e;
+    --navy-mid: #152540;
+    --navy-light: #1e3358;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --cream: #faf7f0;
+    --text-dark: #1a1a2e;
+    --text-muted: #5a6a82;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13, 27, 46, 0.97);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem;
+    height: 68px;
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo img { height: 44px; width: 44px; object-fit: contain; border-radius: 50%; }
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+  .nav-logo-text span { display: block; font-weight: 400; font-size: 0.75rem; color: rgba(232,201,122,0.65); letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a.active { color: var(--gold-light); }
+
+  /* PAGE HERO */
+  .page-hero {
+    min-height: 60vh;
+    background: var(--navy);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    padding: 8rem 2rem 5rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .stars {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 42% 8%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 68% 25%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 12%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 22% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 52% 45%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 78% 65%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 32% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 58% 75%, rgba(201,168,76,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 50%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 8% 88%, rgba(255,255,255,0.4) 0%, transparent 100%);
+  }
+  .hero-candle {
+    position: relative; z-index: 2;
+    margin-bottom: 2rem;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .candle-flame {
+    width: 18px; height: 28px;
+    background: radial-gradient(ellipse at 50% 80%, var(--gold-light) 0%, var(--gold) 45%, rgba(201,168,76,0.2) 100%);
+    border-radius: 50% 50% 30% 30%;
+    animation: flicker 2.5s ease-in-out infinite;
+    margin-bottom: 4px;
+  }
+  @keyframes flicker {
+    0%,100% { transform: scaleX(1) scaleY(1); opacity: 1; }
+    25% { transform: scaleX(0.92) scaleY(1.05); opacity: 0.9; }
+    50% { transform: scaleX(1.05) scaleY(0.97); opacity: 1; }
+    75% { transform: scaleX(0.96) scaleY(1.03); opacity: 0.95; }
+  }
+  .candle-body {
+    width: 14px; height: 60px;
+    background: linear-gradient(to bottom, #f5e9c8, #e8d5a0);
+    border-radius: 2px 2px 0 0;
+    position: relative;
+  }
+  .candle-body::after {
+    content: '';
+    position: absolute; bottom: 0; left: -6px; right: -6px; height: 8px;
+    background: rgba(201,168,76,0.2);
+    border-radius: 50%;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    position: relative; z-index: 2;
+  }
+  .page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.05;
+    position: relative; z-index: 2;
+    margin-bottom: 0.75rem;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-dates {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+    color: rgba(255,255,255,0.45);
+    position: relative; z-index: 2;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+  }
+  .hero-rule {
+    width: 80px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    position: relative; z-index: 2;
+  }
+
+  /* PHOTO + INTRO */
+  .intro-section {
+    background: var(--cream);
+    padding: 6rem 2rem;
+  }
+  .intro-inner {
+    max-width: 1000px; margin: 0 auto;
+    display: grid; grid-template-columns: 300px 1fr; gap: 5rem; align-items: start;
+  }
+  .photo-column { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+  .photo-frame {
+    width: 100%; aspect-ratio: 3/4;
+    background: var(--navy-mid);
+    border: 2px solid rgba(201,168,76,0.3);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-frame::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 70%, rgba(201,168,76,0.15) 0%, transparent 100%);
+  }
+  .photo-placeholder-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem; font-weight: 700;
+    color: rgba(201,168,76,0.35);
+    position: relative; z-index: 1;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .photo-placeholder-text {
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    position: relative; z-index: 1;
+    text-align: center; padding: 0 1.5rem;
+    line-height: 1.6;
+  }
+  .photo-caption {
+    text-align: center;
+  }
+  .photo-caption strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.2rem;
+  }
+  .photo-caption span {
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .bio-column { }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .bio-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 600; color: var(--navy);
+    line-height: 1.2; margin-bottom: 1rem;
+  }
+  .bio-heading em { font-style: italic; color: var(--gold); }
+  .rule { width: 50px; height: 2px; background: var(--gold); margin-bottom: 2rem; }
+  .bio-text p {
+    font-size: 1.02rem; line-height: 1.85; color: #3a4560;
+    margin-bottom: 1.25rem;
+  }
+  .bio-text p:last-child { margin-bottom: 0; }
+
+  /* QUOTE HIGHLIGHT */
+  .quote-section {
+    background: var(--navy);
+    padding: 6rem 2rem;
+  }
+  .quote-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+  .quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem; color: var(--gold); opacity: 0.25;
+    line-height: 0.5; display: block; margin-bottom: 1.5rem;
+  }
+  .big-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-style: italic; font-weight: 400;
+    color: #fff;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+  }
+  .big-quote strong {
+    color: var(--gold-light);
+    font-style: normal; font-weight: 600;
+  }
+  .quote-attr {
+    font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+  .quote-divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 2.5rem auto;
+  }
+
+  /* MEMORY / TRIBUTE */
+  .memory-section {
+    background: #f5eedc;
+    padding: 6rem 2rem;
+  }
+  .memory-inner { max-width: 900px; margin: 0 auto; }
+  .memory-header { margin-bottom: 3.5rem; }
+  .memory-card {
+    background: #fff;
+    border-left: 4px solid var(--gold);
+    padding: 3rem;
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  .memory-card::before {
+    content: '\201C';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem;
+    color: var(--gold);
+    opacity: 0.15;
+    position: absolute;
+    top: 0.5rem; left: 1rem;
+    line-height: 1;
+  }
+  .memory-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-style: italic;
+    color: #3a4560;
+    line-height: 1.85;
+    position: relative; z-index: 1;
+  }
+  .memory-text p { margin-bottom: 1.1rem; }
+  .memory-text p:last-child { margin-bottom: 0; }
+  .memory-closing {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-style: italic; font-weight: 600;
+    color: var(--navy);
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(13,27,46,0.1);
+  }
+  .memory-attribution {
+    display: flex; align-items: center; gap: 1rem;
+    margin-top: 2rem;
+  }
+  .attr-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--gold-light);
+    flex-shrink: 0;
+  }
+  .attr-info strong {
+    display: block;
+    font-size: 0.9rem; font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.15rem;
+  }
+  .attr-info span {
+    font-size: 0.78rem; color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .share-memory {
+    margin-top: 3rem;
+    padding: 2.5rem;
+    background: var(--navy);
+    text-align: center;
+  }
+  .share-memory p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-style: italic;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  .btn-gold {
+    display: inline-block;
+    padding: 0.85rem 2.2rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-gold:hover { background: var(--gold-light); }
+
+  /* LEGACY SECTION */
+  .legacy-section {
+    background: var(--cream);
+    padding: 6rem 2rem;
+  }
+  .legacy-inner { max-width: 900px; margin: 0 auto; }
+  .legacy-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    margin-top: 1rem;
+  }
+  .legacy-card {
+    padding: 2.5rem;
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+  }
+  .legacy-card::after {
+    content: '';
+    position: absolute; bottom: 0; right: 0;
+    width: 60px; height: 60px;
+    border-right: 2px solid rgba(201,168,76,0.2);
+    border-bottom: 2px solid rgba(201,168,76,0.2);
+  }
+  .legacy-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: var(--gold-light);
+    margin-bottom: 1rem;
+  }
+  .legacy-card p {
+    font-size: 0.92rem; line-height: 1.8;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+  }
+  .footer-tagline {
+    font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .footer-links a {
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .intro-inner { grid-template-columns: 1fr; }
+    .photo-frame { aspect-ratio: 4/3; max-width: 280px; }
+    .legacy-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="Gemini_Generated_Image_.png" alt="Stardust Community Players logo" onerror="this.style.display:'none'">
+    <div class="nav-logo-text">
+      Stardust Community Players
+      <span>Danvers, MA</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#mission">About</a></li>
+    <li><a href="michael_armento.html" class="active">Michael N. Armento</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="board_of_directors.html">Board</a></li>
+    <li><a href="join_us.html">Join Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="stars"></div>
+  <div class="hero-candle">
+    <div class="candle-flame"></div>
+    <div class="candle-body"></div>
+  </div>
+  <p class="hero-eyebrow">In Loving Memory</p>
+  <h1><em>Michael N. Armento</em></h1>
+  <p class="hero-dates">Founding Director · Danvers High School Academy Theater</p>
+  <div class="hero-rule"></div>
+</div>
+
+<!-- INTRO / BIO -->
+<section class="intro-section">
+  <div class="intro-inner">
+    <div class="photo-column fade-up">
+      <div class="photo-frame">
+        <div class="photo-placeholder-icon">MA</div>
+        <div class="photo-placeholder-text">Photo coming soon<br>— replace with an<br>image of Michael</div>
+      </div>
+      <div class="photo-caption">
+        <strong>Michael N. Armento</strong>
+        <span>Educator · Director · Mentor</span>
+      </div>
+    </div>
+
+    <div class="bio-column fade-up">
+      <p class="section-label">A Life in the Arts</p>
+      <h2 class="bio-heading">The Visionary Behind<br><em>the Curtain</em></h2>
+      <div class="rule"></div>
+      <div class="bio-text">
+        <p>Michael N. Armento was the founding director of the Danvers High School Academy Theater — a role he brought to life with extraordinary dedication, boundless creativity, and a rare gift for seeing the potential in every person who walked through his doors.</p>
+        <p>As an educator and director, Michael didn't simply teach theater. He taught young people how to find their voice, take up space, and believe that what they had to say was worth an audience. For countless students in Danvers and beyond, he was the first person who truly saw them.</p>
+        <p>His influence didn't end when the curtain fell or when students graduated. Michael's lessons — about courage, about collaboration, about showing up fully for the people around you — rippled outward into careers, families, and communities far beyond the stage he built.</p>
+        <p>Stardust Community Players was founded to carry that spirit forward: to be the kind of place Michael made, where the arts are a doorway into something much larger than any single performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE QUOTE -->
+<section class="quote-section">
+  <div class="quote-inner fade-up">
+    <span class="quote-mark">"</span>
+    <p class="big-quote">
+      "There are no small roles,<br>only <strong>small actors.</strong>"
+    </p>
+    <div class="quote-attr">— Michael N. Armento</div>
+    <div class="quote-divider"></div>
+    <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-style:italic; color:rgba(255,255,255,0.5); line-height:1.7; max-width:580px; margin:0 auto;">
+      Those who knew him understand that this was never just about theater. Every role — every person — has an impact. The size of the stage never determines the size of the difference you make.
+    </p>
+  </div>
+</section>
+
+<!-- COMMUNITY MEMORY -->
+<section class="memory-section">
+  <div class="memory-inner">
+    <div class="memory-header fade-up">
+      <p class="section-label">Remembered By Those He Touched</p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3vw,2.4rem); font-weight:600; color:var(--navy); line-height:1.2; margin-bottom:1rem;">
+        "Go Be Someone's <em style="color:var(--gold);">Uncle Mike</em>"
+      </h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="memory-card fade-up">
+      <div class="memory-text">
+        <p>You don't know the impact you have on another person until you do.</p>
+        <p>While working at Clark School, I was lucky enough to participate in a unique graduation ceremony where a staff member "gives away" a student. Being a small school with small class sizes, it was an easy thing to accomplish. In 2018, I had the honor to send off a student who I had worked closely with on many theater projects. This student had been at Clark for almost a decade and had become close to a great many of the staff.</p>
+        <p>In the end I was given the opportunity to give the speech for this student. Over our time working on sets for shows, I regaled her with tales of Uncle Mike. Specifically, how he had impacted my life and my love of theater in the very short time we had together.</p>
+        <p>One day, just before graduation day, the student came to me with a note of thanks for all I had done for her. In that note she referred to me as her "Uncle Mike." The tears that leapt from my eyes were real and even now, I consider that statement one of my greatest compliments received.</p>
+        <p>At that moment I knew what I needed to say to her as part of the speech. I closed it by saying to her, "go be someone's Uncle Mike."</p>
+        <div class="memory-closing">
+          "Thank you Uncle Mike. You were always fond of saying, 'There are no small roles, only small actors.' I now understand that to mean something greater and beyond the stage. Your role, no matter how big or small, has an impact on people."
+        </div>
+      </div>
+    </div>
+
+    <div class="memory-attribution fade-up">
+      <div class="attr-avatar">JF</div>
+      <div class="attr-info">
+        <strong>John Fox</strong>
+        <span>DHS Academy Theater Alum &amp; Former Clark School Staff</span>
+      </div>
+    </div>
+
+    <div class="share-memory fade-up">
+      <p>Did Michael touch your life? We'd love to hear your story and honor his memory together.</p>
+      <a href="index.html#contact" class="btn-gold">Share Your Memory</a>
+    </div>
+  </div>
+</section>
+
+<!-- HIS LEGACY LIVES ON -->
+<section class="legacy-section">
+  <div class="legacy-inner">
+    <div class="fade-up">
+      <p class="section-label">His Legacy Lives On</p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3vw,2.4rem); font-weight:600; color:var(--navy); line-height:1.2; margin-bottom:1rem;">
+        What We Carry <em style="color:var(--gold);">Forward</em>
+      </h2>
+      <div class="rule"></div>
+    </div>
+    <div class="legacy-grid">
+      <div class="legacy-card fade-up">
+        <h3>A Space for Every Voice</h3>
+        <p>Michael believed every person who walked through his door had something worth saying. Stardust Community Players is built on that same conviction — there is a place here for everyone, at every experience level.</p>
+      </div>
+      <div class="legacy-card fade-up">
+        <h3>The Ripple Effect</h3>
+        <p>John Fox's story shows us how legacy travels — from teacher to student to student's student. Our mission is to keep that chain going: every performance, every rehearsal, every moment of courage on stage is a link in it.</p>
+      </div>
+      <div class="legacy-card fade-up">
+        <h3>No Small Roles</h3>
+        <p>On stage and off, we hold to Michael's conviction that every role matters. The stagehand, the props assistant, the first-time auditioner — all are essential. There are no small parts in our community.</p>
+      </div>
+      <div class="legacy-card fade-up">
+        <h3>Be Someone's Uncle Mike</h3>
+        <p>We ask every member of Stardust to take that charge seriously. Mentor generously. See the people around you. You may never know the full reach of your kindness — but it reaches further than you think.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Stardust Community Players</div>
+  <div class="footer-tagline">Honoring a Legacy Through the Performing Arts · Danvers, MA</div>
+  <div class="footer-links">
+    <a href="index.html#mission">About</a>
+    <a href="michael_armento.html">Michael N. Armento</a>
+    <a href="board_of_directors.html">Board</a>
+    <a href="events.html">Events</a>
+    <a href="join_us.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 Stardust Community Players · Non-profit · 978-335-5230 · stardustcommunityplayers@gmail.com</div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stardust Community Players</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0d1b2e;
+    --navy-mid: #152540;
+    --navy-light: #1e3358;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --cream: #faf7f0;
+    --text-dark: #1a1a2e;
+    --text-muted: #5a6a82;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13, 27, 46, 0.97);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem;
+    height: 68px;
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo img { height: 44px; width: 44px; object-fit: contain; border-radius: 50%; }
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+  .nav-logo-text span { display: block; font-weight: 400; font-size: 0.75rem; color: rgba(232,201,122,0.65); letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 7rem 2rem 5rem;
+    text-align: center;
+  }
+
+  /* Stars background */
+  .stars {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 70% 30%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 55% 50%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 85%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(2px 2px at 60% 80%, rgba(201,168,76,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 45%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 48% 72%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 78% 90%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 40%, rgba(201,168,76,0.3) 0%, transparent 100%);
+  }
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+  }
+
+  .hero-logo {
+    width: 220px; height: 220px;
+    object-fit: contain;
+    position: relative; z-index: 2;
+    animation: logoFloat 6s ease-in-out infinite;
+    filter: drop-shadow(0 0 40px rgba(201,168,76,0.3));
+    margin-bottom: 2rem;
+  }
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    position: relative; z-index: 2;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.0;
+    position: relative; z-index: 2;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    font-style: italic;
+    color: rgba(255,255,255,0.6);
+    margin-top: 1rem;
+    position: relative; z-index: 2;
+    max-width: 480px;
+    letter-spacing: 0.02em;
+  }
+  .hero-divider {
+    width: 80px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 2rem auto;
+    position: relative; z-index: 2;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 2;
+  }
+  .btn-primary {
+    padding: 0.85rem 2.2rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-outline {
+    padding: 0.85rem 2.2rem;
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .scroll-hint span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(201,168,76,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .rule {
+    width: 60px; height: 2px;
+    background: var(--gold);
+    margin-bottom: 2.5rem;
+  }
+
+  /* MISSION */
+  .mission { background: var(--cream); }
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .mission-text p {
+    font-size: 1.05rem; line-height: 1.85;
+    color: #3a4560;
+    margin-bottom: 1.25rem;
+  }
+  .mission-text p:last-child { margin-bottom: 0; }
+  .mission-quote {
+    position: relative;
+    padding: 3rem;
+    background: var(--navy);
+  }
+  .mission-quote::before {
+    content: '\201C';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    color: var(--gold);
+    opacity: 0.25;
+    position: absolute;
+    top: -1rem; left: 1.5rem;
+    line-height: 1;
+  }
+  .mission-quote blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-style: italic; font-weight: 400;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.55;
+    position: relative; z-index: 1;
+  }
+  .mission-quote cite {
+    display: block;
+    margin-top: 1.25rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem; font-style: normal;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* COMMUNITY PILLARS */
+  .pillars { background: var(--navy); }
+  .pillars .section-title { color: #fff; }
+  .pillars .section-label { color: var(--gold); }
+  .pillars-lead {
+    font-size: 1.05rem; line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    max-width: 640px;
+    margin-bottom: 4rem;
+  }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+  }
+  .pillar {
+    background: var(--navy-mid);
+    padding: 2.5rem 2rem;
+    border-top: 2px solid var(--gold);
+    transition: background 0.2s;
+  }
+  .pillar:hover { background: var(--navy-light); }
+  .pillar-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 700;
+    color: rgba(201,168,76,0.2);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .pillar h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pillar p {
+    font-size: 0.9rem; line-height: 1.75;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* MICHAEL TRIBUTE */
+  .tribute { background: #f5eedc; }
+  .tribute-inner {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 4rem; align-items: start;
+  }
+  .tribute-text p {
+    font-size: 1rem; line-height: 1.85; color: #3a4560;
+    margin-bottom: 1rem;
+  }
+  .tribute-card {
+    background: var(--navy);
+    padding: 2.5rem;
+    text-align: center;
+  }
+  .tribute-initial {
+    width: 80px; height: 80px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--gold-light);
+  }
+  .tribute-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: #fff; margin-bottom: 0.25rem;
+  }
+  .tribute-card .role {
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .tribute-card p {
+    font-size: 0.88rem; line-height: 1.75;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* GET INVOLVED */
+  .involve { background: var(--cream); }
+  .involve-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  .involve-card {
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(13,27,46,0.12);
+    background: #fff;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .involve-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 24px rgba(201,168,76,0.12);
+  }
+  .involve-icon {
+    font-size: 2rem; margin-bottom: 1rem; line-height: 1;
+  }
+  .involve-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600;
+    color: var(--navy); margin-bottom: 0.5rem;
+  }
+  .involve-card p {
+    font-size: 0.85rem; line-height: 1.7; color: var(--text-muted);
+  }
+
+  /* PERFORMANCES */
+  .performances { background: var(--navy-mid); }
+  .performances .section-title { color: #fff; }
+  .performances .section-label { color: var(--gold); }
+  .perf-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .perf-card {
+    background: var(--navy-light);
+    padding: 2rem;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .perf-card:hover { border-bottom-color: var(--gold); }
+  .perf-tag {
+    display: inline-block;
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    padding: 0.3rem 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .perf-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600; color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .perf-card p { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
+  .perf-note {
+    margin-top: 3rem;
+    padding: 1.5rem 2rem;
+    background: rgba(201,168,76,0.1);
+    border-left: 3px solid var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* CONTACT */
+  .contact { background: var(--cream); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+  }
+  .contact-info { }
+  .contact-info p {
+    font-size: 1rem; line-height: 1.8; color: #3a4560;
+    margin-bottom: 2rem;
+  }
+  .contact-details { list-style: none; }
+  .contact-details li {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(13,27,46,0.08);
+    font-size: 0.92rem; color: var(--navy);
+  }
+  .contact-details li:last-child { border-bottom: none; }
+  .contact-details .label {
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); min-width: 80px; padding-top: 2px;
+  }
+  .contact-details a { color: var(--navy); text-decoration: none; }
+  .contact-details a:hover { color: var(--gold); }
+
+  .contact-form-area {
+    background: var(--navy);
+    padding: 3rem;
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 600; color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .form-sub { font-size: 0.88rem; color: rgba(255,255,255,0.5); margin-bottom: 2rem; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label {
+    display: block;
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.4rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--navy); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    width: 100%;
+    padding: 0.9rem;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--gold-light); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+  }
+  .footer-tagline {
+    font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .footer-links a {
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy {
+    font-size: 0.75rem; color: rgba(255,255,255,0.2);
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .mission-grid, .tribute-inner, .contact-grid { grid-template-columns: 1fr; }
+    .pillars-grid { grid-template-columns: 1fr; }
+    .involve-grid { grid-template-columns: repeat(2, 1fr); }
+    .perf-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="" alt="Stardust Community Players logo" onerror="this.style.display='none'">
+    <div class="nav-logo-text">
+      Stardust Community Players
+      <span>Danvers, MA</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#mission">About</a></li>
+    <li><a href="michael_armento.html">Michael N. Armento</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="board_of_directors.html">Board</a></li>
+    <li><a href="join_us.html">Join Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="stars"></div>
+  <div class="hero-glow"></div>
+  <img src="Gemini_Generated_Image_.png" alt="Stardust Community Players" class="hero-logo">
+  <p class="hero-eyebrow">Danvers, Massachusetts</p>
+  <h1>Where <em>Every Voice</em><br>Finds the Stage</h1>
+  <p class="hero-sub">A community theater born from love of the arts — and love of the people who make them.</p>
+  <div class="hero-divider"></div>
+  <div class="hero-ctas">
+    <a href="#involve" class="btn-primary">Join Our Community</a>
+    <a href="#performances" class="btn-outline">See What's Coming</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Discover</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission" id="mission">
+  <div class="section-inner">
+    <div class="mission-grid">
+      <div class="mission-text fade-up">
+        <p class="section-label">Who We Are</p>
+        <h2 class="section-title">More Than a Stage —<br>A <em>Community</em></h2>
+        <div class="rule"></div>
+        <p>Stardust Community Players is a Danvers-based nonprofit theater that believes the arts belong to everyone. We're not just performers putting on shows for an audience — we're neighbors, teachers, students, parents, and dreamers building something together.</p>
+        <p>Our productions span the full spectrum of performance art: classic drama, joyful musicals, original works, dance, spoken word, and beyond. If it ignites the human spirit, we're here for it.</p>
+        <p>We are passionate volunteers united by a single purpose — to celebrate what we can create when a community comes together and gives each other a chance to shine.</p>
+      </div>
+      <div class="mission-quote fade-up">
+        <blockquote>
+          "It is more than just a stage — it is a space where dreams take shape, voices find their resonance, and stories unfold to captivate audiences of all ages."
+        </blockquote>
+        <cite>— Stardust Community Players</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars" id="pillars">
+  <div class="section-inner">
+    <p class="section-label">Our Values</p>
+    <h2 class="section-title" style="color:#fff;">We Are <em>Of</em> This Community,<br>Not Just <em>For</em> It</h2>
+    <div class="rule"></div>
+    <p class="pillars-lead">Everything we do flows from a belief that art is not a product delivered to an audience — it's something we make, experience, and grow through together.</p>
+    <div class="pillars-grid">
+      <div class="pillar fade-up">
+        <div class="pillar-num">01</div>
+        <h3>Rooted in Danvers</h3>
+        <p>We are part of the fabric of this town. Our cast, crew, and audience are our neighbors — and the stories we tell reflect the lives we share here.</p>
+      </div>
+      <div class="pillar fade-up">
+        <div class="pillar-num">02</div>
+        <h3>Open to Everyone</h3>
+        <p>No prior experience required. Whether you've never set foot on a stage or you've performed for decades, there is a role for you — on stage or behind the scenes.</p>
+      </div>
+      <div class="pillar fade-up">
+        <div class="pillar-num">03</div>
+        <h3>All Forms of the Art</h3>
+        <p>Stage performance is our heartbeat, but we embrace the full range: dance, spoken word, music, original works, and any art form that brings people into the same room.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MICHAEL TRIBUTE -->
+<section class="tribute" id="michael">
+  <div class="section-inner">
+    <div class="tribute-inner">
+      <div class="tribute-text fade-up">
+        <p class="section-label">Our Legacy</p>
+        <h2 class="section-title">In Honor of<br><em>Michael N. Armento</em></h2>
+        <div class="rule"></div>
+        <p>Stardust Community Players was founded with a deep sense of purpose — to carry forward the legacy of Michael N. Armento, the visionary founding director of the Danvers High School Academy Theater.</p>
+        <p>Michael's extraordinary dedication to the performing arts and his gift for drawing out the best in young people left a lasting imprint on countless lives in this community. His belief that every student had something worth saying — and deserved a stage to say it from — is the foundation we build on.</p>
+        <p>We strive to be worthy of that legacy every time we gather: by creating a space where creativity thrives, stories come alive, and the spirit of collaboration flourishes.</p>
+      </div>
+      <div class="tribute-card fade-up">
+        <div class="tribute-initial">MA</div>
+        <h3>Michael N. Armento</h3>
+        <p class="role">Visionary · Educator · Founding Director</p>
+        <p>Danvers High School Academy Theater</p>
+        <br>
+        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:rgba(255,255,255,0.7); line-height:1.6;">"His work lives on in every performance we give and every life we touch through the arts."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GET INVOLVED -->
+<section class="involve" id="involve">
+  <div class="section-inner">
+    <p class="section-label">Join Us</p>
+    <h2 class="section-title">There's a Place<br>for <em>You</em> Here</h2>
+    <div class="rule"></div>
+    <div class="involve-grid">
+      <div class="involve-card fade-up">
+        <div class="involve-icon">🎭</div>
+        <h3>Perform</h3>
+        <p>Audition for our productions — drama, musicals, original works. All experience levels welcome.</p>
+      </div>
+      <div class="involve-card fade-up">
+        <div class="involve-icon">🔧</div>
+        <h3>Crew & Production</h3>
+        <p>Bring shows to life behind the curtain — set building, lighting, sound, costumes, and more.</p>
+      </div>
+      <div class="involve-card fade-up">
+        <div class="involve-icon">💛</div>
+        <h3>Support & Donate</h3>
+        <p>As a nonprofit, we rely on generous donors who believe art makes a community stronger.</p>
+      </div>
+      <div class="involve-card fade-up">
+        <div class="involve-icon">👏</div>
+        <h3>Come & Watch</h3>
+        <p>Fill the seats. Your presence is what makes live theater alive. Bring your family, your friends.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UPCOMING PERFORMANCES -->
+<section class="performances" id="performances">
+  <div class="section-inner">
+    <p class="section-label">On Stage</p>
+    <h2 class="section-title">What's <em>Coming</em></h2>
+    <div class="rule" style="background: var(--gold);"></div>
+    <div class="perf-grid">
+      <div class="perf-card fade-up">
+        <span class="perf-tag">Upcoming Event</span>
+        <h3>Meet & Greet with the Board</h3>
+        <p>Come meet the people behind Stardust Community Players. Date to be announced — follow our social channels or sign up to stay in the loop.</p>
+      </div>
+      <div class="perf-card fade-up">
+        <span class="perf-tag">Season Ahead</span>
+        <h3>Our First Productions</h3>
+        <p>We are actively planning our inaugural season. Classic drama, beloved musicals, and original works are all on the table. Join us to help shape what we create.</p>
+      </div>
+      <div class="perf-card fade-up">
+        <span class="perf-tag">Always Open</span>
+        <h3>Auditions &amp; Volunteers</h3>
+        <p>We are building our community now. Whether you want to perform, direct, design, or help run the organization — we'd love to hear from you.</p>
+      </div>
+    </div>
+    <div class="perf-note">
+      We are a young theater and our story is still being written. <strong style="color:var(--gold-light);">You can be part of writing it.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="fade-up">
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title">We'd Love<br>to Hear from <em>You</em></h2>
+        <div class="rule"></div>
+        <p>Whether you're interested in performing, volunteering, donating, or just want to know when the next show is — reach out. We're a friendly bunch.</p>
+        <ul class="contact-details">
+          <li>
+            <span class="label">Founder</span>
+            <span>Becky Lemp Ankiewicz, President &amp; Founder</span>
+          </li>
+          <li>
+            <span class="label">Phone</span>
+            <a href="tel:9783355230">978-335-5230</a>
+          </li>
+          <li>
+            <span class="label">Email</span>
+            <a href="mailto:stardustcommunityplayers@gmail.com">stardustcommunityplayers@gmail.com</a>
+          </li>
+          <li>
+            <span class="label">Website</span>
+            <a href="https://stardustcommunityplayers.weebly.com" target="_blank">stardustcommunityplayers.weebly.com</a>
+          </li>
+          <li>
+            <span class="label">Location</span>
+            <span>Danvers, Massachusetts &amp; surrounding communities</span>
+          </li>
+        </ul>
+      </div>
+      <div class="contact-form-area fade-up">
+        <p class="form-title">Say Hello</p>
+        <p class="form-sub">We read every message personally.</p>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Jane Smith">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="jane@example.com">
+        </div>
+        <div class="form-group">
+          <label>I'm Interested In</label>
+          <select>
+            <option>Performing / Auditioning</option>
+            <option>Volunteering / Crew</option>
+            <option>Donating / Supporting</option>
+            <option>Attending Shows</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us a bit about yourself and how you'd like to get involved…"></textarea>
+        </div>
+        <button class="form-submit" onclick="alert('Thank you! In the live site, this would send your message to the Stardust team.')">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Stardust Community Players</div>
+  <div class="footer-tagline">Honoring a Legacy Through the Performing Arts · Danvers, MA</div>
+  <div class="footer-links">
+    <a href="#mission">About</a>
+    <a href="michael_armento.html">Michael N. Armento</a>
+    <a href="board_of_directors.html">Board</a>
+    <a href="events.html">Events</a>
+    <a href="join_us.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 Stardust Community Players · Non-profit · 978-335-5230 · stardustcommunityplayers@gmail.com</div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

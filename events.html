@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events — Stardust Community Players</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0d1b2e;
+    --navy-mid: #152540;
+    --navy-light: #1e3358;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --cream: #faf7f0;
+    --text-dark: #1a1a2e;
+    --text-muted: #5a6a82;
+    --cat-fundraiser: #b05c2f;
+    --cat-community: #2a7a4b;
+    --cat-audition: #5a3aa8;
+    --cat-board: #1a5a82;
+    --cat-production: #9b2335;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,27,46,0.97); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 68px;
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { height: 44px; width: 44px; object-fit: contain; border-radius: 50%; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.04em; line-height: 1.2; }
+  .nav-logo-text span { display: block; font-weight: 400; font-size: 0.75rem; color: rgba(232,201,122,0.65); letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+
+  /* PAGE HERO */
+  .page-hero {
+    min-height: 44vh; background: var(--navy);
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding: 8rem 2rem 4.5rem; position: relative; overflow: hidden; text-align: center;
+  }
+  .stars {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 8% 18%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 38% 8%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 63% 22%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 82% 14%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 52% 52%, rgba(201,168,76,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 22% 62%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 73% 72%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 91% 48%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 6% 82%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 88%, rgba(255,255,255,0.4) 0%, transparent 100%);
+  }
+  .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; position: relative; z-index: 2; }
+  .page-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem,6vw,4rem); font-weight: 700; color: #fff; line-height: 1.05; position: relative; z-index: 2; margin-bottom: 1rem; }
+  .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: rgba(255,255,255,0.45); position: relative; z-index: 2; margin-bottom: 2rem; max-width: 520px; }
+  .hero-rule { width: 80px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); position: relative; z-index: 2; }
+
+  /* FILTER BAR */
+  .filter-bar { background: #fff; border-bottom: 1px solid rgba(13,27,46,0.08); padding: 0 2rem; position: sticky; top: 68px; z-index: 50; }
+  .filter-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 0.5rem; overflow-x: auto; padding: 1rem 0; scrollbar-width: none; }
+  .filter-inner::-webkit-scrollbar { display: none; }
+  .filter-btn { display: inline-flex; align-items: center; gap: 6px; padding: 0.45rem 1.1rem; border: 1px solid rgba(13,27,46,0.15); background: transparent; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: all 0.18s; }
+  .filter-btn:hover { border-color: var(--navy); color: var(--navy); }
+  .filter-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .filter-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  /* MAIN */
+  .events-page { padding: 4rem 2rem 6rem; }
+  .events-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* FEATURED EVENT */
+  .featured-event { background: var(--navy); margin-bottom: 4rem; display: grid; grid-template-columns: 1fr 360px; overflow: hidden; position: relative; }
+  .featured-badge { position: absolute; top: 1.5rem; left: 1.5rem; font-size: 0.6rem; letter-spacing: 0.2em; font-weight: 600; background: var(--gold); color: var(--navy); padding: 0.3rem 0.75rem; z-index: 2; }
+  .featured-body { padding: 4rem 3rem 3rem; }
+  .event-category-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.3rem 0.85rem; margin-bottom: 1.25rem; }
+  .tag-fundraiser { background: rgba(176,92,47,0.2); color: #e8956a; }
+  .tag-community  { background: rgba(42,122,75,0.2); color: #6ec992; }
+  .tag-audition   { background: rgba(90,58,168,0.2); color: #b09ae0; }
+  .tag-board      { background: rgba(26,90,130,0.2); color: #7bbedd; }
+  .tag-production { background: rgba(155,35,53,0.2); color: #e07a8a; }
+  .featured-body h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 1rem; }
+  .featured-body h2 em { font-style: italic; color: var(--gold-light); }
+  .event-desc { font-size: 0.97rem; line-height: 1.8; color: rgba(255,255,255,0.6); margin-bottom: 2rem; max-width: 500px; }
+  .event-meta-list { list-style: none; margin-bottom: 2rem; }
+  .event-meta-list li { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.88rem; color: rgba(255,255,255,0.55); padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .event-meta-list li:last-child { border-bottom: none; }
+  .meta-label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); min-width: 72px; padding-top: 1px; }
+  .featured-panel { background: rgba(255,255,255,0.04); border-left: 1px solid rgba(201,168,76,0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 2rem; text-align: center; gap: 1.5rem; }
+  .date-month { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.25rem; }
+  .date-day { font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 700; color: #fff; line-height: 1; }
+  .date-year { font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-top: 0.2rem; }
+  .featured-divider { width: 40px; height: 1px; background: rgba(201,168,76,0.3); }
+  .featured-time { font-size: 0.88rem; color: rgba(255,255,255,0.55); text-align: center; line-height: 1.8; }
+  .btn-gold-sm { display: inline-block; padding: 0.75rem 1.8rem; background: var(--gold); color: var(--navy); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
+  .btn-gold-sm:hover { background: var(--gold-light); }
+  .btn-outline-sm { display: inline-block; padding: 0.75rem 1.8rem; background: transparent; color: rgba(255,255,255,0.7); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+  .btn-outline-sm:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  /* SECTION HEADERS */
+  .events-section { margin-bottom: 4rem; }
+  .events-section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.75rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(13,27,46,0.1); }
+  .section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-fundraiser { background: var(--cat-fundraiser); }
+  .dot-community  { background: var(--cat-community); }
+  .dot-audition   { background: var(--cat-audition); }
+  .dot-board      { background: var(--cat-board); }
+  .dot-production { background: var(--cat-production); }
+  .events-section-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--navy); }
+  .events-section-header h3 em { font-style: italic; color: var(--gold); }
+  .event-count { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-left: auto; }
+
+  /* STANDARD CARDS */
+  .event-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .event-card { background: #fff; border: 1px solid rgba(13,27,46,0.09); overflow: hidden; transition: box-shadow 0.22s, border-color 0.22s; display: flex; flex-direction: column; }
+  .event-card:hover { box-shadow: 0 4px 24px rgba(13,27,46,0.08); border-color: rgba(13,27,46,0.2); }
+  .event-card.placeholder { opacity: 0.5; }
+  .card-date-strip { padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid rgba(13,27,46,0.06); display: flex; align-items: center; gap: 1rem; }
+  .mini-date { text-align: center; flex-shrink: 0; width: 44px; }
+  .mini-date .m { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .mini-date .d { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--navy); line-height: 1; }
+  .mini-date .ph { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: rgba(13,27,46,0.25); line-height: 1.4; }
+  .card-content { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
+  .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem; line-height: 1.25; }
+  .card-title.ph { color: rgba(13,27,46,0.3); font-style: italic; }
+  .card-blurb { font-size: 0.85rem; line-height: 1.72; color: var(--text-muted); flex: 1; }
+  .card-blurb.ph { color: rgba(13,27,46,0.28); font-style: italic; }
+  .card-footer { padding: 0.85rem 1.25rem; border-top: 1px solid rgba(13,27,46,0.06); display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); }
+  .card-link { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); text-decoration: none; font-weight: 600; transition: color 0.15s; }
+  .card-link:hover { color: var(--navy); }
+  .card-link.ph { color: rgba(13,27,46,0.22); cursor: default; }
+
+  /* PRODUCTION CARDS */
+  .event-cards.productions { grid-template-columns: repeat(2, 1fr); }
+  .production-card { background: var(--navy); border: 1px solid rgba(201,168,76,0.1); display: grid; grid-template-columns: 1fr 150px; overflow: hidden; transition: border-color 0.22s; }
+  .production-card:hover { border-color: rgba(201,168,76,0.35); }
+  .production-card.placeholder { opacity: 0.48; }
+  .prod-body { padding: 2rem; }
+  .prod-season { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 0.5rem; }
+  .prod-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; line-height: 1.15; }
+  .prod-title.ph { color: rgba(255,255,255,0.22); font-style: italic; font-size: 1.15rem; }
+  .prod-subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--gold); margin-bottom: 1rem; }
+  .prod-desc { font-size: 0.85rem; line-height: 1.75; color: rgba(255,255,255,0.5); margin-bottom: 1.25rem; }
+  .prod-meta { font-size: 0.8rem; color: rgba(255,255,255,0.32); line-height: 1.8; }
+  .prod-panel { background: rgba(255,255,255,0.03); border-left: 1px solid rgba(201,168,76,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem 1rem; gap: 1rem; text-align: center; }
+  .prod-panel .ph-date { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: rgba(255,255,255,0.18); line-height: 1.7; }
+
+  /* BOARD MEETING LIST */
+  .board-event-list { display: flex; flex-direction: column; gap: 1px; }
+  .board-event-row { background: #fff; display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 1.5rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(13,27,46,0.08); transition: border-color 0.2s; }
+  .board-event-row:hover { border-color: var(--cat-board); }
+  .board-event-row.placeholder { opacity: 0.48; }
+  .brd-date { text-align: center; }
+  .brd-date .bm { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .brd-date .bd { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; color: var(--navy); line-height: 1; }
+  .brd-date .bp { font-size: 0.78rem; font-style: italic; color: rgba(13,27,46,0.28); }
+  .brd-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--navy); margin-bottom: 0.2rem; }
+  .brd-info h4.ph { color: rgba(13,27,46,0.28); font-style: italic; }
+  .brd-info p { font-size: 0.82rem; color: var(--text-muted); }
+  .brd-action { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cat-board); font-weight: 600; white-space: nowrap; }
+
+  /* NEWSLETTER */
+  .newsletter-strip { background: var(--navy-mid); padding: 3.5rem 2rem; text-align: center; border-top: 1px solid rgba(201,168,76,0.15); border-bottom: 1px solid rgba(201,168,76,0.15); margin-bottom: 0; }
+  .newsletter-strip h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+  .newsletter-strip h3 em { font-style: italic; color: var(--gold-light); }
+  .newsletter-strip p { font-size: 0.9rem; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; }
+  .newsletter-form { display: flex; max-width: 440px; margin: 0 auto; }
+  .newsletter-form input { flex: 1; padding: 0.85rem 1.1rem; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-right: none; color: #fff; font-family: 'Jost', sans-serif; font-size: 0.9rem; outline: none; }
+  .newsletter-form input::placeholder { color: rgba(255,255,255,0.3); }
+  .newsletter-form input:focus { border-color: var(--gold); }
+  .newsletter-form button { padding: 0.85rem 1.5rem; background: var(--gold); color: var(--navy); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+  .newsletter-form button:hover { background: var(--gold-light); }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(201,168,76,0.2); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold-light); letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+  .footer-tagline { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1.5rem; }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .footer-links a { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 960px) {
+    .featured-event { grid-template-columns: 1fr; }
+    .featured-panel { border-left: none; border-top: 1px solid rgba(201,168,76,0.15); flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .event-cards { grid-template-columns: repeat(2, 1fr); }
+    .event-cards.productions { grid-template-columns: 1fr; }
+    .board-event-row { grid-template-columns: 60px 1fr; }
+    .brd-action { display: none; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .event-cards, .event-cards.productions { grid-template-columns: 1fr; }
+    .production-card { grid-template-columns: 1fr; }
+    .prod-panel { border-left: none; border-top: 1px solid rgba(201,168,76,0.1); flex-direction: row; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="Gemini_Generated_Image_.png" alt="Stardust Community Players logo" onerror="this.style.display='none'">
+    <div class="nav-logo-text">Stardust Community Players<span>Danvers, MA</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#mission">About</a></li>
+    <li><a href="michael_armento.html">Michael N. Armento</a></li>
+    <li><a href="events.html" class="active">Events</a></li>
+    <li><a href="board_of_directors.html">Board</a></li>
+    <li><a href="join_us.html">Join Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="stars"></div>
+  <p class="hero-eyebrow">Something Is Always Happening</p>
+  <h1>Events &amp; <em>Performances</em></h1>
+  <p class="hero-sub">From opening nights to craft fairs — this is where community comes alive.</p>
+  <div class="hero-rule"></div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" onclick="filterEvents('all',this)">All Events</button>
+    <button class="filter-btn" onclick="filterEvents('fundraiser',this)"><span class="filter-dot" style="background:var(--cat-fundraiser)"></span>Fundraisers</button>
+    <button class="filter-btn" onclick="filterEvents('community',this)"><span class="filter-dot" style="background:var(--cat-community)"></span>Community</button>
+    <button class="filter-btn" onclick="filterEvents('audition',this)"><span class="filter-dot" style="background:var(--cat-audition)"></span>Auditions</button>
+    <button class="filter-btn" onclick="filterEvents('board',this)"><span class="filter-dot" style="background:var(--cat-board)"></span>Board Meetings</button>
+    <button class="filter-btn" onclick="filterEvents('production',this)"><span class="filter-dot" style="background:var(--cat-production)"></span>Productions</button>
+  </div>
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="events-page">
+  <div class="events-inner">
+
+    <!-- FEATURED: CRAFT FAIR -->
+    <div class="featured-event fade-up" data-category="fundraiser">
+      <div class="featured-badge">FEATURED EVENT</div>
+      <div class="featured-body">
+        <span class="event-category-tag tag-fundraiser">🎨 Fundraiser</span>
+        <h2>Stardust <em>Craft Fair</em></h2>
+        <p class="event-desc">Our first community fundraiser! Browse handmade goods from local artisans, enjoy live entertainment, and help support Stardust Community Players as we build toward our inaugural season. All proceeds benefit our productions and programs.</p>
+        <ul class="event-meta-list">
+          <li><span class="meta-label">Date</span><span>Date to be announced — stay tuned!</span></li>
+          <li><span class="meta-label">Time</span><span>TBD</span></li>
+          <li><span class="meta-label">Location</span><span>TBD — Danvers area</span></li>
+          <li><span class="meta-label">Admission</span><span>Free to attend · Vendor tables available</span></li>
+          <li><span class="meta-label">Contact</span><span>stardustcommunityplayers@gmail.com · 978-335-5230</span></li>
+        </ul>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="index.html#contact" class="btn-gold-sm">Get Updates</a>
+          <a href="index.html#contact" class="btn-outline-sm">Inquire About Vending</a>
+        </div>
+      </div>
+      <div class="featured-panel">
+        <div>
+          <div class="date-month">Coming Soon</div>
+          <div class="date-day">TBA</div>
+          <div class="date-year">2025 · Danvers, MA</div>
+        </div>
+        <div class="featured-divider"></div>
+        <div class="featured-time">
+          🎨 Local artisans<br>
+          🎭 Live entertainment<br>
+          ☕ Community fun<br>
+          💛 Supporting Stardust
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ FUNDRAISERS ══ -->
+    <div class="events-section fade-up" data-category="fundraiser">
+      <div class="events-section-header">
+        <span class="section-dot dot-fundraiser"></span>
+        <h3>Fundraising <em>Events</em></h3>
+        <span class="event-count">Add upcoming events here</span>
+      </div>
+      <div class="event-cards">
+        <div class="event-card">
+          <div class="card-date-strip">
+            <div class="mini-date"><div class="ph">TBA</div></div>
+            <span class="event-category-tag tag-fundraiser" style="font-size:0.62rem;padding:0.2rem 0.6rem;margin:0;">🎨 Fundraiser</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title">Stardust Craft Fair</div>
+            <p class="card-blurb">Our inaugural fundraising craft fair. Local artisans, live entertainment, and community fun — all benefiting our first season.</p>
+          </div>
+          <div class="card-footer">
+            <span>📍 Danvers area · TBD</span>
+            <a href="index.html#contact" class="card-link">Details →</a>
+          </div>
+        </div>
+        <div class="event-card placeholder">
+          <div class="card-date-strip">
+            <div class="mini-date"><div class="ph">—</div></div>
+            <span class="event-category-tag tag-fundraiser" style="font-size:0.62rem;padding:0.2rem 0.6rem;margin:0;opacity:0.5;">🎨 Fundraiser</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title ph">Fundraiser event — title TBD</div>
+            <p class="card-blurb ph">Add your next fundraising event here — gala, raffle, benefit concert, bake sale, and more.</p>
+          </div>
+          <div class="card-footer">
+            <span style="color:rgba(13,27,46,0.25);">📍 Location TBD</span>
+            <span class="card-link ph">Coming soon</span>
+          </div>
+        </div>
+        <div class="event-card placeholder">
+          <div class="card-date-strip">
+            <div class="mini-date"><div class="ph">—</div></div>
+            <span class="event-category-tag tag-fundraiser" style="font-size:0.62rem;padding:0.2rem 0.6rem;margin:0;opacity:0.5;">🎨 Fundraiser</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title ph">Fundraiser event — title TBD</div>
+            <p class="card-blurb ph">Another fundraising opportunity to support Stardust's mission, programs, and productions.</p>
+          </div>
+          <div class="card-footer">
+            <span style="color:rgba(13,27,46,0.25);">📍 Location TBD</span>
+            <span class="card-link ph">Coming soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ COMMUNITY GATHERINGS ══ -->
+    <div class="events-section fade-up" data-category="community">
+      <div class="events-section-header">
+        <span class="section-dot dot-community"></span>
+        <h3>Community <em>Gatherings</em></h3>
+        <span class="event-count">Add upcoming events here</span>
+      </div>
+      <div class="event-cards">
+        <div class="event-card">
+          <div class="card-date-strip">
+            <div class="mini-date"><div class="ph">TBA</div></div>
+            <span class="event-category-tag tag-community" style="font-size:0.62rem;padding:0.2rem 0.6rem;margin:0;">🤝 Community</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title">Meet &amp; Greet with the Board</div>
+            <p class="card-blurb">Come meet the people behind Stardust Community Players! Get to know the board, ask questions, and learn how to get involved.</p>
+          </div>
+          <div class="card-footer">
+            <span>📍 Danvers · TBD</span>
+            <a href="index.html#contact" class="card-link">Stay Informed →</a>
+          </div>
+        </div>
+        <div class="event-card placeholder">
+          <div class="card-date-strip">
+            <div class="mini-date"><div class="ph">—</div></div>
+            <span class="event-category-tag tag-community" style="font-size:0.62rem;padding:0.2rem 0.6rem;margin:0;opacity:0.5;">🤝 Community</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title ph">Community event — title TBD</div>
+            <p class="card-blurb ph">Potlucks, volunteer days, open houses, cast socials — add your next community gathering here.</p>
+          </div>
+          <div class="card-footer">
+            <span style="color:rgba(13,27,46,0.25);">📍 Location TBD</span>
+            <span class="card-link ph">Coming soon</span>
+          </div>
+        </div>
+        <div class="event-card placeholder">
+          <div class="card-date-strip">
+            <div class="mini-date"><div class="ph">—</div></div>
+            <span class="event-category-tag tag-community" style="font-size:0.62rem;padding:0.2rem 0.6rem;margin:0;opacity:0.5;">🤝 Community</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title ph">Community event — title TBD</div>
+            <p class="card-blurb ph">Any event that brings the community together around the arts belongs here.</p>
+          </div>
+          <div class="card-footer">
+            <span style="color:rgba(13,27,46,0.25);">📍 Location TBD</span>
+            <span class="card-link ph">Coming soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ AUDITIONS ══ -->
+    <div class="events-section fade-up" data-category="audition">
+      <div class="events-section-header">
+        <span class="section-dot dot-audition"></span>
+        <h3>Auditions &amp; <em>Callbacks</em></h3>
+        <span class="event-count">Add upcoming auditions here</span>
+      </div>
+      <div class="event-cards">
+        <div class="event-card placeholder">
+          <div class="card-date-strip">
+            <div class="mini-date"><div class="ph">—</div></div>
+            <span class="event-category-tag tag-audition" style="font-size:0.62rem;padding:0.2rem 0.6rem;margin:0;opacity:0.6;">🎤 Audition</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title ph">Open Auditions — Production TBD</div>
+            <p class="card-blurb ph">Open auditions for an upcoming Stardust production. All experience levels welcome. Sides and details shared in advance.</p>
+          </div>
+          <div class="card-footer">
+            <span style="color:rgba(13,27,46,0.25);">📍 Location TBD</span>
+            <span class="card-link ph">Coming soon</span>
+          </div>
+        </div>
+        <div class="event-card placeholder">
+          <div class="card-date-strip">
+            <div class="mini-date"><div class="ph">—</div></div>
+            <span class="event-category-tag tag-audition" style="font-size:0.62rem;padding:0.2rem 0.6rem;margin:0;opacity:0.6;">🎤 Callback</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title ph">Callbacks — Production TBD</div>
+            <p class="card-blurb ph">Callback auditions for invited performers. Specific scenes and music will be assigned ahead of the callback date.</p>
+          </div>
+          <div class="card-footer">
+            <span style="color:rgba(13,27,46,0.25);">📍 Location TBD</span>
+            <span class="card-link ph">Coming soon</span>
+          </div>
+        </div>
+        <div class="event-card placeholder">
+          <div class="card-date-strip">
+            <div class="mini-date"><div class="ph">—</div></div>
+            <span class="event-category-tag tag-audition" style="font-size:0.62rem;padding:0.2rem 0.6rem;margin:0;opacity:0.6;">🎤 Open Call</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title ph">Crew &amp; Volunteer Open Call</div>
+            <p class="card-blurb ph">Not a performer? We need you too. Open call for stage crew, set builders, costumers, lighting, and more.</p>
+          </div>
+          <div class="card-footer">
+            <span style="color:rgba(13,27,46,0.25);">📍 Location TBD</span>
+            <span class="card-link ph">Coming soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ BOARD MEETINGS ══ -->
+    <div class="events-section fade-up" data-category="board">
+      <div class="events-section-header">
+        <span class="section-dot dot-board"></span>
+        <h3>Board <em>Meetings</em></h3>
+        <span class="event-count">Public welcome unless noted</span>
+      </div>
+      <div class="board-event-list">
+        <div class="board-event-row placeholder">
+          <div class="brd-date"><div class="bp">TBD</div></div>
+          <div class="brd-info">
+            <h4 class="ph">Board Meeting — date TBD</h4>
+            <p>Regular meeting of the Stardust Community Players Board of Directors. Agenda posted in advance.</p>
+          </div>
+          <span class="brd-action">Public Welcome</span>
+        </div>
+        <div class="board-event-row placeholder">
+          <div class="brd-date"><div class="bp">TBD</div></div>
+          <div class="brd-info">
+            <h4 class="ph">Board Meeting — date TBD</h4>
+            <p>Regular meeting of the Stardust Community Players Board of Directors. Agenda posted in advance.</p>
+          </div>
+          <span class="brd-action">Public Welcome</span>
+        </div>
+        <div class="board-event-row placeholder">
+          <div class="brd-date"><div class="bp">TBD</div></div>
+          <div class="brd-info">
+            <h4 class="ph">Annual Organizational Meeting — date TBD</h4>
+            <p>Annual meeting covering season recap, elections, and planning for the year ahead. All members and supporters encouraged to attend.</p>
+          </div>
+          <span class="brd-action">All Members</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STAGE PRODUCTIONS ══ -->
+    <div class="events-section fade-up" data-category="production">
+      <div class="events-section-header">
+        <span class="section-dot dot-production"></span>
+        <h3>Stage <em>Productions</em></h3>
+        <span class="event-count">Inaugural season coming soon</span>
+      </div>
+      <div class="event-cards productions">
+        <div class="production-card placeholder">
+          <div class="prod-body">
+            <div class="prod-season">Inaugural Season · Stardust Community Players</div>
+            <div class="prod-title ph">Production title to be announced</div>
+            <div class="prod-subtitle">Genre · Type of production</div>
+            <p class="prod-desc">Our first full stage production is in the works. Sign up for our mailing list to be the first to hear the announcement — and find out how to audition.</p>
+            <div class="prod-meta">Venue: TBD · Danvers area<br>Performances: Dates TBD<br>Tickets: Details to follow</div>
+          </div>
+          <div class="prod-panel">
+            <div class="ph-date">Coming<br>Soon<br>—<br>2025</div>
+            <a href="index.html#contact" class="btn-gold-sm" style="font-size:0.68rem;padding:0.6rem 1.1rem;">Stay Updated</a>
+          </div>
+        </div>
+        <div class="production-card placeholder">
+          <div class="prod-body">
+            <div class="prod-season">Inaugural Season · Stardust Community Players</div>
+            <div class="prod-title ph">Second production — to be announced</div>
+            <div class="prod-subtitle">Genre · Type of production</div>
+            <p class="prod-desc">Our season is taking shape. We're planning a diverse mix of classic drama, musical theater, and original works. Watch this space.</p>
+            <div class="prod-meta">Venue: TBD · Danvers area<br>Performances: Dates TBD<br>Tickets: Details to follow</div>
+          </div>
+          <div class="prod-panel">
+            <div class="ph-date">Coming<br>Soon<br>—<br>2025</div>
+            <a href="index.html#contact" class="btn-gold-sm" style="font-size:0.68rem;padding:0.6rem 1.1rem;">Stay Updated</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="newsletter-strip fade-up">
+      <h3>Never Miss a <em>Curtain Call</em></h3>
+      <p>Get event announcements, audition notices, and news delivered to your inbox.</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="your@email.com">
+        <button onclick="alert('In the live site, this will subscribe you to Stardust updates!')">Subscribe</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Stardust Community Players</div>
+  <div class="footer-tagline">Honoring a Legacy Through the Performing Arts · Danvers, MA</div>
+  <div class="footer-links">
+    <a href="index.html#mission">About</a>
+    <a href="michael_armento.html">Michael N. Armento</a>
+    <a href="board_of_directors.html">Board</a>
+    <a href="events.html">Events</a>
+    <a href="join_us.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 Stardust Community Players · Non-profit · 978-335-5230 · stardustcommunityplayers@gmail.com</div>
+</footer>
+
+<script>
+  function filterEvents(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('[data-category]').forEach(s => {
+      s.style.display = (category === 'all' || s.dataset.category === category) ? '' : 'none';
+    });
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

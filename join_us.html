@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Us — Stardust Community Players</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0d1b2e; --navy-mid: #152540; --navy-light: #1e3358;
+    --gold: #c9a84c; --gold-light: #e8c97a; --gold-pale: #f5e9c8;
+    --cream: #faf7f0; --text-dark: #1a1a2e; --text-muted: #5a6a82;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,27,46,0.97); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 68px;
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { height: 44px; width: 44px; object-fit: contain; border-radius: 50%; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.04em; line-height: 1.2; }
+  .nav-logo-text span { display: block; font-weight: 400; font-size: 0.75rem; color: rgba(232,201,122,0.65); letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+
+  .page-hero {
+    min-height: 52vh; background: var(--navy);
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding: 8rem 2rem 5rem; position: relative; overflow: hidden; text-align: center;
+  }
+  .stars {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 9%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 66% 24%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 84% 13%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 53% 54%, rgba(201,168,76,0.32) 0%, transparent 100%),
+      radial-gradient(1px 1px at 24% 64%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 74% 74%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 47%, rgba(255,255,255,0.38) 0%, transparent 100%),
+      radial-gradient(1px 1px at 7% 83%, rgba(255,255,255,0.32) 0%, transparent 100%),
+      radial-gradient(1px 1px at 46% 89%, rgba(255,255,255,0.38) 0%, transparent 100%),
+      radial-gradient(1px 1px at 31% 38%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 15%, rgba(255,255,255,0.5) 0%, transparent 100%);
+  }
+  .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; position: relative; z-index: 2; }
+  .page-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem,6vw,4.5rem); font-weight: 700; color: #fff; line-height: 1.05; position: relative; z-index: 2; margin-bottom: 1rem; }
+  .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: rgba(255,255,255,0.5); position: relative; z-index: 2; margin-bottom: 2.5rem; max-width: 560px; line-height: 1.6; }
+  .hero-rule { width: 80px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); position: relative; z-index: 2; }
+
+  .role-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(201,168,76,0.18); padding: 0 2rem; }
+  .role-bar-inner { max-width: 1100px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .role-bar-inner::-webkit-scrollbar { display: none; }
+  .role-anchor { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 1.1rem 1.8rem; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; white-space: nowrap; }
+  .role-anchor:hover { color: var(--gold-light); border-bottom-color: var(--gold); }
+  .role-icon { font-size: 1.3rem; }
+
+  .page-section { padding: 6rem 2rem; }
+  .page-section.alt { background: #f5eedc; }
+  .page-section.dark { background: var(--navy); }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,3.5vw,2.8rem); font-weight: 600; color: var(--navy); line-height: 1.15; margin-bottom: 1rem; }
+  .section-title.light { color: #fff; }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-title.light em { color: var(--gold-light); }
+  .rule { width: 50px; height: 2px; background: var(--gold); margin-bottom: 2.5rem; }
+
+  /* WAYS GRID */
+  .ways-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(13,27,46,0.08); border: 1px solid rgba(13,27,46,0.08); }
+  .way-card { background: #fff; padding: 2.5rem 2rem; display: flex; flex-direction: column; gap: 1rem; transition: background 0.2s; }
+  .way-card:hover { background: var(--gold-pale); }
+  .way-icon { font-size: 2rem; line-height: 1; }
+  .way-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: var(--navy); }
+  .way-text { font-size: 0.88rem; line-height: 1.75; color: var(--text-muted); }
+  .way-link { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 600; text-decoration: none; margin-top: auto; }
+  .way-link:hover { color: var(--navy); }
+
+  /* QUOTE BAND */
+  .quote-band { background: var(--gold); padding: 3.5rem 2rem; text-align: center; }
+  .quote-band blockquote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem,2.5vw,1.9rem); font-style: italic; font-weight: 600; color: var(--navy); max-width: 720px; margin: 0 auto; line-height: 1.5; }
+  .quote-band cite { display: block; margin-top: 0.75rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; font-style: normal; color: rgba(13,27,46,0.55); }
+
+  /* PERFORM */
+  .perform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .perform-text p { font-size: 1rem; line-height: 1.85; color: #3a4560; margin-bottom: 1.1rem; }
+  .audition-box { background: var(--navy); padding: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .status-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .status-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: #fff; }
+  .status-badge { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.35rem 0.85rem; font-weight: 600; background: rgba(201,168,76,0.15); color: var(--gold); }
+  .status-body { font-size: 0.88rem; line-height: 1.75; color: rgba(255,255,255,0.55); }
+  .status-divider { height: 1px; background: rgba(255,255,255,0.08); }
+  .tip-heading { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+  .tip-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.5rem; }
+  .tip-list li { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.87rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+  .tip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 6px; }
+
+  /* CREW */
+  .crew-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(201,168,76,0.15); margin-bottom: 2.5rem; }
+  .crew-card { background: var(--navy-light); padding: 1.75rem; transition: background 0.2s; }
+  .crew-card:hover { background: rgba(30,51,88,0.9); }
+  .crew-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .crew-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.4rem; }
+  .crew-desc { font-size: 0.83rem; line-height: 1.7; color: rgba(255,255,255,0.5); }
+  .section-lead-light { font-size: 1rem; line-height: 1.85; color: rgba(255,255,255,0.6); max-width: 640px; margin-bottom: 3rem; }
+
+  /* DONATE */
+  .donate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .donate-text p { font-size: 1rem; line-height: 1.85; color: #3a4560; margin-bottom: 1.1rem; }
+  .donate-rows { display: flex; flex-direction: column; gap: 1px; }
+  .donate-row { background: #fff; border: 1px solid rgba(13,27,46,0.08); padding: 1.5rem; display: flex; align-items: flex-start; gap: 1.25rem; transition: border-color 0.2s, box-shadow 0.2s; }
+  .donate-row:hover { border-color: var(--gold); box-shadow: 0 2px 16px rgba(201,168,76,0.08); }
+  .donate-icon { font-size: 1.75rem; flex-shrink: 0; padding-top: 2px; }
+  .donate-row h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.3rem; }
+  .donate-row p { font-size: 0.85rem; line-height: 1.7; color: var(--text-muted); }
+
+  /* ATTEND */
+  .attend-split { display: grid; grid-template-columns: 1fr 1fr; }
+  .attend-panel { padding: 5rem 3.5rem; }
+  .attend-panel.left { background: var(--navy-light); }
+  .attend-panel.right { background: var(--navy); }
+  .attend-panel h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; color: #fff; margin-bottom: 0.75rem; }
+  .attend-panel h3 em { font-style: italic; color: var(--gold-light); }
+  .attend-panel p { font-size: 0.92rem; line-height: 1.8; color: rgba(255,255,255,0.55); margin-bottom: 1.75rem; }
+  .attend-panel ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
+  .attend-panel ul li { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.55; }
+  .attend-panel ul li::before { content: '✦'; color: var(--gold); font-size: 0.55rem; flex-shrink: 0; margin-top: 5px; }
+
+  /* SPREAD */
+  .spread-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .spread-card { padding: 2.5rem 2rem; background: #fff; border: 1px solid rgba(13,27,46,0.09); text-align: center; transition: border-color 0.2s, box-shadow 0.2s; }
+  .spread-card:hover { border-color: var(--gold); box-shadow: 0 4px 24px rgba(201,168,76,0.1); }
+  .spread-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+  .spread-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.6rem; }
+  .spread-card p { font-size: 0.86rem; line-height: 1.75; color: var(--text-muted); }
+
+  /* SIGNUP */
+  .signup-section { background: var(--navy); padding: 6rem 2rem; }
+  .signup-inner { max-width: 880px; margin: 0 auto; }
+  .signup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .signup-intro h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,3vw,2.6rem); font-weight: 600; color: #fff; line-height: 1.2; margin-bottom: 1rem; }
+  .signup-intro h2 em { font-style: italic; color: var(--gold-light); }
+  .signup-intro p { font-size: 0.95rem; line-height: 1.8; color: rgba(255,255,255,0.55); margin-bottom: 1.5rem; }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .checklist li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.88rem; color: rgba(255,255,255,0.6); }
+  .checklist li::before { content: '✓'; color: var(--gold); font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+
+  .signup-form { display: flex; flex-direction: column; gap: 1.1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+  .form-group input, .form-group select, .form-group textarea { padding: 0.8rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.92rem; outline: none; transition: border-color 0.2s; width: 100%; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.28); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--navy); color: #fff; }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .checkbox-group { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.4rem; }
+  .checkbox-label { display: flex; align-items: center; gap: 0.75rem; font-size: 0.88rem; color: rgba(255,255,255,0.65); cursor: pointer; }
+  .checkbox-label input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
+  .form-submit { padding: 0.95rem; background: var(--gold); color: var(--navy); font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; width: 100%; }
+  .form-submit:hover { background: var(--gold-light); }
+
+  /* BUTTONS */
+  .btn-gold { display: inline-block; padding: 0.85rem 2.2rem; background: var(--gold); color: var(--navy); font-family: 'Jost', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
+  .btn-gold:hover { background: var(--gold-light); }
+  .btn-outline-dark { display: inline-block; padding: 0.85rem 2.2rem; background: transparent; color: var(--navy); font-family: 'Jost', sans-serif; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border: 1px solid rgba(13,27,46,0.3); cursor: pointer; transition: border-color 0.2s; }
+  .btn-outline-dark:hover { border-color: var(--navy); }
+  .btn-outline-light { display: inline-block; padding: 0.85rem 2.2rem; background: transparent; color: rgba(255,255,255,0.75); font-family: 'Jost', sans-serif; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+  .btn-outline-light:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  footer { background: var(--navy); padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(201,168,76,0.2); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold-light); letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+  .footer-tagline { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1.5rem; }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .footer-links a { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
+
+  .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 960px) {
+    .ways-grid { grid-template-columns: repeat(2, 1fr); }
+    .perform-grid, .donate-grid, .signup-grid { grid-template-columns: 1fr; }
+    .attend-split { grid-template-columns: 1fr; }
+    .crew-grid { grid-template-columns: repeat(2, 1fr); }
+    .spread-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .ways-grid, .crew-grid, .spread-grid { grid-template-columns: 1fr; }
+    .attend-panel { padding: 3rem 1.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="Gemini_Generated_Image_.png" alt="Stardust Community Players logo" onerror="this.style.display='none'">
+    <div class="nav-logo-text">Stardust Community Players<span>Danvers, MA</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#mission">About</a></li>
+    <li><a href="michael_armento.html">Michael N. Armento</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="board_of_directors.html">Board</a></li>
+    <li><a href="join_us.html" class="active">Join Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="stars"></div>
+  <p class="hero-eyebrow">Every Role Matters</p>
+  <h1>There Is a Place<br>for <em>You</em> Here</h1>
+  <p class="hero-sub">Stardust is built by the community, for the community. Whatever you love to do — we need you.</p>
+  <div class="hero-rule"></div>
+</div>
+
+<div class="role-bar">
+  <div class="role-bar-inner">
+    <a href="#perform" class="role-anchor"><span class="role-icon">🎭</span>Perform</a>
+    <a href="#crew" class="role-anchor"><span class="role-icon">🔧</span>Crew &amp; Production</a>
+    <a href="#donate" class="role-anchor"><span class="role-icon">💛</span>Donate &amp; Sponsor</a>
+    <a href="#attend" class="role-anchor"><span class="role-icon">👏</span>Attend</a>
+    <a href="#spread" class="role-anchor"><span class="role-icon">📣</span>Spread the Word</a>
+    <a href="#signup" class="role-anchor"><span class="role-icon">✉️</span>Sign Up</a>
+  </div>
+</div>
+
+<!-- INTRO WAYS -->
+<div class="page-section" style="padding-top:5rem;padding-bottom:4rem;">
+  <div class="section-inner fade-up">
+    <p class="section-label">How to Get Involved</p>
+    <h2 class="section-title">You Don't Have to<br><em>Audition</em> to Belong</h2>
+    <div class="rule"></div>
+    <p style="font-size:1.02rem;line-height:1.85;color:#3a4560;max-width:680px;margin-bottom:3rem;">There are no small roles at Stardust — on stage or off. Whether you want to perform, build sets, donate your time, fill a seat, or just tell a friend, every contribution shapes what we become together.</p>
+    <div class="ways-grid">
+      <div class="way-card">
+        <div class="way-icon">🎭</div>
+        <div class="way-title">Perform</div>
+        <p class="way-text">Audition for our productions — drama, musicals, original works. All experience levels welcome. Everyone gets a fair shot.</p>
+        <a href="#perform" class="way-link">Learn more →</a>
+      </div>
+      <div class="way-card">
+        <div class="way-icon">🔧</div>
+        <div class="way-title">Crew &amp; Production</div>
+        <p class="way-text">Build the world the actors inhabit. Sets, costumes, lighting, sound, stage management — productions live and die by great crews.</p>
+        <a href="#crew" class="way-link">Learn more →</a>
+      </div>
+      <div class="way-card">
+        <div class="way-icon">💛</div>
+        <div class="way-title">Donate &amp; Sponsor</div>
+        <p class="way-text">As a nonprofit, your generosity keeps us going. Every dollar funds productions, costumes, equipment, and community access to the arts.</p>
+        <a href="#donate" class="way-link">Learn more →</a>
+      </div>
+      <div class="way-card">
+        <div class="way-icon">👏</div>
+        <div class="way-title">Attend &amp; Cheer</div>
+        <p class="way-text">Fill the seats. Your presence is what makes live theater alive. Bring your family, your neighbors, your skeptical friends.</p>
+        <a href="#attend" class="way-link">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="quote-band">
+  <blockquote>"There are no small roles, only small actors — and that means something greater and beyond the stage."</blockquote>
+  <cite>— Michael N. Armento, as remembered by John Fox, DHS Academy Theater alum</cite>
+</div>
+
+<!-- PERFORM -->
+<div class="page-section" id="perform">
+  <div class="section-inner">
+    <div class="perform-grid">
+      <div class="fade-up">
+        <p class="section-label">On Stage</p>
+        <h2 class="section-title">Come <em>Perform</em> With Us</h2>
+        <div class="rule"></div>
+        <p style="font-size:1rem;line-height:1.85;color:#3a4560;margin-bottom:1.1rem;">You don't need a résumé. You don't need to have done this before. Stardust auditions are open to anyone with a desire to be on stage — newcomers and veterans alike.</p>
+        <p style="font-size:1rem;line-height:1.85;color:#3a4560;margin-bottom:1.1rem;">Our productions span the full range of performance art: classic drama, musical theater, original works, spoken word, and more. Whatever form of performance speaks to you, there is a place for it here.</p>
+        <p style="font-size:1rem;line-height:1.85;color:#3a4560;margin-bottom:2rem;">We believe in casting people, not types. Come as you are. Let us see what you've got.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="events.html" class="btn-gold">See Upcoming Auditions</a>
+          <a href="#signup" class="btn-outline-dark">Get Audition Alerts</a>
+        </div>
+      </div>
+      <div class="audition-box fade-up">
+        <div class="status-header">
+          <span class="status-title">Current Audition Status</span>
+          <span class="status-badge">Coming Soon</span>
+        </div>
+        <p class="status-body">No auditions are scheduled right now — but our first production is in the works. Sign up below to be among the first to hear when we open auditions.</p>
+        <div class="status-divider"></div>
+        <div>
+          <p class="tip-heading">What to expect at auditions</p>
+          <ul class="tip-list">
+            <li><span class="tip-dot"></span>Open to all experience levels — no prior theater experience required</li>
+            <li><span class="tip-dot"></span>Sides (script excerpts) shared in advance so you can prepare</li>
+            <li><span class="tip-dot"></span>Musical auditions include a brief song — guidance provided</li>
+            <li><span class="tip-dot"></span>A welcoming, low-pressure environment — we want you to succeed</li>
+            <li><span class="tip-dot"></span>Crew and production roles available for those who prefer offstage</li>
+          </ul>
+        </div>
+        <a href="#signup" class="btn-gold" style="text-align:center;">Notify Me When Auditions Open</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREW -->
+<div class="page-section dark" id="crew">
+  <div class="section-inner">
+    <div class="fade-up">
+      <p class="section-label">Behind the Curtain</p>
+      <h2 class="section-title light">Join the <em>Crew</em></h2>
+      <div class="rule"></div>
+      <p class="section-lead-light">Theater is a team sport. For every actor on stage, there are a dozen people making the magic possible. No prior experience required — just a willingness to learn and show up.</p>
+    </div>
+    <div class="crew-grid fade-up">
+      <div class="crew-card"><div class="crew-icon">🪚</div><div class="crew-name">Set Construction</div><p class="crew-desc">Build the worlds our stories live in. If you can swing a hammer or pick up a paintbrush, you're exactly who we need.</p></div>
+      <div class="crew-card"><div class="crew-icon">💡</div><div class="crew-name">Lighting &amp; Sound</div><p class="crew-desc">Control the atmosphere. Lighting and sound design are among the most powerful storytelling tools in theater.</p></div>
+      <div class="crew-card"><div class="crew-icon">🪡</div><div class="crew-name">Costumes &amp; Wardrobe</div><p class="crew-desc">Bring characters to life through what they wear. Sewing skills welcome but not required — lots of roles here.</p></div>
+      <div class="crew-card"><div class="crew-icon">📋</div><div class="crew-name">Stage Management</div><p class="crew-desc">Keep the show running smoothly. Stage managers are the organized backbone of every production.</p></div>
+      <div class="crew-card"><div class="crew-icon">🎨</div><div class="crew-name">Props &amp; Set Dressing</div><p class="crew-desc">Source, build, and manage the objects that populate our stage. Creative problem-solving at its best.</p></div>
+      <div class="crew-card"><div class="crew-icon">📸</div><div class="crew-name">Photography &amp; Media</div><p class="crew-desc">Capture the moments and help us share our story with the community through photography and social media.</p></div>
+    </div>
+    <div class="fade-up" style="margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="#signup" class="btn-gold">I Want to Join the Crew</a>
+      <a href="index.html#contact" class="btn-outline-light">Ask a Question</a>
+    </div>
+  </div>
+</div>
+
+<!-- DONATE -->
+<div class="page-section alt" id="donate">
+  <div class="section-inner">
+    <div class="donate-grid">
+      <div class="fade-up">
+        <p class="section-label">Support the Mission</p>
+        <h2 class="section-title">Give to <em>Stardust</em></h2>
+        <div class="rule"></div>
+        <p style="font-size:1rem;line-height:1.85;color:#3a4560;margin-bottom:1.1rem;">As a nonprofit organization, Stardust Community Players depends on the generosity of people who believe the arts make a community stronger. Every contribution — large or small — goes directly to our work.</p>
+        <p style="font-size:1rem;line-height:1.85;color:#3a4560;margin-bottom:1.1rem;">Your support pays for production costs, costumes, set materials, venue rental, and programs that make theater accessible to everyone in our community.</p>
+        <p style="font-size:1rem;line-height:1.85;color:#3a4560;margin-bottom:2rem;">Interested in sponsoring a specific production, event, or program? We'd love to talk.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="index.html#contact" class="btn-gold">Donate or Sponsor</a>
+          <a href="index.html#contact" class="btn-outline-dark">Ask About Sponsorship</a>
+        </div>
+      </div>
+      <div class="donate-rows fade-up">
+        <div class="donate-row"><div class="donate-icon">🎭</div><div><h4>Sponsor a Production</h4><p>Have your name or business associated with a specific show. Great visibility and a direct connection to the community.</p></div></div>
+        <div class="donate-row"><div class="donate-icon">🎨</div><div><h4>Sponsor an Event</h4><p>Support our fundraisers, community gatherings, and special events. Ask us about event sponsorship packages.</p></div></div>
+        <div class="donate-row"><div class="donate-icon">💛</div><div><h4>General Donation</h4><p>Give toward wherever the need is greatest — production costs, equipment, accessibility programs, and more.</p></div></div>
+        <div class="donate-row"><div class="donate-icon">🪑</div><div><h4>In-Kind Donation</h4><p>Have materials, equipment, costumes, or a venue to offer? We welcome in-kind contributions of all kinds.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ATTEND -->
+<div id="attend">
+  <div class="attend-split">
+    <div class="attend-panel left fade-up">
+      <h3>Come See a <em>Show</em></h3>
+      <p>There is nothing like the electricity of live theater. The moment the lights go down and the stage comes alive — it belongs to all of us.</p>
+      <ul>
+        <li>All productions open to the general public</li>
+        <li>Family-friendly performances planned every season</li>
+        <li>Accessible venues whenever possible</li>
+        <li>Group tickets and community partnerships available</li>
+      </ul>
+      <a href="events.html" class="btn-gold">See Upcoming Events</a>
+    </div>
+    <div class="attend-panel right fade-up">
+      <h3>Bring Someone <em>New</em></h3>
+      <p>One of the greatest gifts you can give someone is their first live theater experience. Bring a neighbor, a kid, a skeptical friend.</p>
+      <ul>
+        <li>Share our events on social media</li>
+        <li>Tell your neighbors, coworkers, and book club</li>
+        <li>Ask about group rates for organizations</li>
+        <li>Help us reach every corner of Danvers and beyond</li>
+      </ul>
+      <a href="#signup" class="btn-outline-light">Get Show Announcements</a>
+    </div>
+  </div>
+</div>
+
+<!-- SPREAD THE WORD -->
+<div class="page-section" id="spread">
+  <div class="section-inner">
+    <div class="fade-up">
+      <p class="section-label">Be an Ambassador</p>
+      <h2 class="section-title">Help Us <em>Grow</em></h2>
+      <div class="rule"></div>
+      <p style="font-size:1rem;line-height:1.85;color:#3a4560;max-width:600px;margin-bottom:3rem;">Word of mouth is the most powerful thing a community theater has. If Stardust means something to you, share it.</p>
+    </div>
+    <div class="spread-grid">
+      <div class="spread-card fade-up">
+        <div class="spread-icon">📱</div>
+        <h3>Follow &amp; Share</h3>
+        <p>Follow us on social media and share our posts — audition announcements, event news, and behind-the-scenes moments reach more people when you share them.</p>
+        <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;">
+          <a href="https://www.facebook.com/profile.php?id=61584057985324" target="_blank" style="font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid rgba(13,27,46,0.15);padding:0.45rem 1rem;transition:border-color 0.2s;">📘 Facebook</a>
+          <a href="https://www.instagram.com/stardustcommunityplayersma/" target="_blank" style="font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid rgba(13,27,46,0.15);padding:0.45rem 1rem;transition:border-color 0.2s;">📸 Instagram</a>
+        </div>
+      </div>
+      <div class="spread-card fade-up">
+        <div class="spread-icon">🗣️</div>
+        <h3>Tell Someone</h3>
+        <p>Tell your neighbors, coworkers, kids' teachers, and barber. Let people know there's a community theater in Danvers and everyone is welcome.</p>
+      </div>
+      <div class="spread-card fade-up">
+        <div class="spread-icon">🏫</div>
+        <h3>Connect Us</h3>
+        <p>Know a school, church, library, or local business that might want to partner with us? Make the introduction. We'd love to deepen our community roots.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP FORM -->
+<div class="signup-section" id="signup">
+  <div class="signup-inner">
+    <div class="signup-grid">
+      <div class="signup-intro fade-up">
+        <p class="section-label">Get Connected</p>
+        <h2><em>Stay in the Loop</em><br>with Stardust</h2>
+        <div class="rule" style="margin-top:1rem;"></div>
+        <p>Whether you want to audition, volunteer, donate, or just know when the next show is — sign up. No spam, ever. Just news about things that matter.</p>
+        <ul class="checklist">
+          <li>Audition announcements before they go public</li>
+          <li>Crew and volunteer call-outs</li>
+          <li>Event and production news</li>
+          <li>Behind-the-scenes updates</li>
+          <li>Fundraising opportunities</li>
+        </ul>
+      </div>
+      <div class="fade-up">
+        <div class="signup-form">
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Jane"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"></div>
+          </div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="jane@example.com"></div>
+          <div class="form-group"><label>Phone (optional)</label><input type="tel" placeholder="978-000-0000"></div>
+          <div class="form-group">
+            <label>I'm Interested In (select all that apply)</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label"><input type="checkbox"> Performing / Auditioning</label>
+              <label class="checkbox-label"><input type="checkbox"> Crew &amp; Production Work</label>
+              <label class="checkbox-label"><input type="checkbox"> Donating or Sponsoring</label>
+              <label class="checkbox-label"><input type="checkbox"> Attending Shows</label>
+              <label class="checkbox-label"><input type="checkbox"> Volunteering at Events</label>
+              <label class="checkbox-label"><input type="checkbox"> General Mailing List</label>
+            </div>
+          </div>
+          <div class="form-group"><label>Tell Us About Yourself (optional)</label><textarea placeholder="Any experience, skills, or just a hello — we'd love to hear from you."></textarea></div>
+          <button class="form-submit" onclick="alert('Thank you! In the live site, this will send your info to the Stardust team.')">I'm In — Send It Over →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Stardust Community Players</div>
+  <div class="footer-tagline">Honoring a Legacy Through the Performing Arts · Danvers, MA</div>
+  <div class="footer-links">
+    <a href="index.html#mission">About</a>
+    <a href="michael_armento.html">Michael N. Armento</a>
+    <a href="board_of_directors.html">Board</a>
+    <a href="events.html">Events</a>
+    <a href="join_us.html">Join Us</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 Stardust Community Players · Non-profit · 978-335-5230 · stardustcommunityplayers@gmail.com</div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.09 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
