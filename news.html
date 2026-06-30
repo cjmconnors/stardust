@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News — Stardust Community Players</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0d1b2e; --navy-mid: #152540; --navy-light: #1e3358;
+    --gold: #c9a84c; --gold-light: #e8c97a; --gold-pale: #f5e9c8;
+    --cream: #faf7f0; --text-dark: #1a1a2e; --text-muted: #5a6a82;
+    --cat-news: #1a5a82;
+    --cat-announcement: #9b2335;
+    --cat-behind: #2a7a4b;
+    --cat-community: #b05c2f;
+    --cat-tribute: #5a3aa8;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,27,46,0.97); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 68px;
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { height: 44px; width: 44px; object-fit: contain; border-radius: 50%; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.04em; line-height: 1.2; }
+  .nav-logo-text span { display: block; font-weight: 400; font-size: 0.75rem; color: rgba(232,201,122,0.65); letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+
+  .page-hero {
+    min-height: 42vh; background: var(--navy);
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding: 8rem 2rem 4.5rem; position: relative; overflow: hidden; text-align: center;
+  }
+  .stars {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 9% 19%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 39% 8%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 65% 23%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 83% 12%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 52% 53%, rgba(201,168,76,0.32) 0%, transparent 100%),
+      radial-gradient(1px 1px at 23% 63%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 73% 73%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 6% 82%, rgba(255,255,255,0.32) 0%, transparent 100%),
+      radial-gradient(1px 1px at 58% 14%, rgba(255,255,255,0.5) 0%, transparent 100%);
+  }
+  .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; position: relative; z-index: 2; }
+  .page-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem,6vw,4.5rem); font-weight: 700; color: #fff; line-height: 1.05; position: relative; z-index: 2; margin-bottom: 1rem; }
+  .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: rgba(255,255,255,0.5); position: relative; z-index: 2; margin-bottom: 2rem; max-width: 500px; line-height: 1.6; }
+  .hero-rule { width: 80px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); position: relative; z-index: 2; }
+
+  .filter-bar { background: #fff; border-bottom: 1px solid rgba(13,27,46,0.08); padding: 0 2rem; position: sticky; top: 68px; z-index: 50; }
+  .filter-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 0.5rem; overflow-x: auto; padding: 1rem 0; scrollbar-width: none; }
+  .filter-inner::-webkit-scrollbar { display: none; }
+  .filter-btn { display: inline-flex; align-items: center; gap: 6px; padding: 0.45rem 1.1rem; border: 1px solid rgba(13,27,46,0.15); background: transparent; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: all 0.18s; }
+  .filter-btn:hover { border-color: var(--navy); color: var(--navy); }
+  .filter-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .filter-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  .blog-page { padding: 5rem 2rem 6rem; }
+  .blog-inner { max-width: 1100px; margin: 0 auto; }
+  .blog-layout { display: grid; grid-template-columns: 1fr 300px; gap: 4rem; align-items: start; }
+
+  /* FEATURED POST */
+  .featured-post {
+    background: var(--navy);
+    display: grid; grid-template-columns: 1fr 1fr;
+    overflow: hidden; margin-bottom: 3.5rem; position: relative;
+  }
+  .featured-badge { position: absolute; top: 1.5rem; left: 1.5rem; font-size: 0.6rem; letter-spacing: 0.2em; font-weight: 600; background: var(--gold); color: var(--navy); padding: 0.3rem 0.75rem; z-index: 2; }
+  .featured-img {
+    background: var(--navy-light); min-height: 320px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    /* TO ADD PHOTO: background-image: url('photo.jpg'); background-size: cover; background-position: center; */
+  }
+  .img-ph { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; font-style: italic; color: rgba(255,255,255,0.18); text-align: center; padding: 2rem; line-height: 1.8; }
+  .featured-body { padding: 3rem; display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+
+  /* Category tags */
+  .post-cat { display: inline-block; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.28rem 0.75rem; font-weight: 600; }
+  .cat-news         { background: rgba(26,90,130,0.18);   color: #7bbedd; }
+  .cat-announcement { background: rgba(155,35,53,0.18);   color: #e07a8a; }
+  .cat-behind       { background: rgba(42,122,75,0.18);   color: #6ec992; }
+  .cat-community    { background: rgba(176,92,47,0.18);   color: #e8956a; }
+  .cat-tribute      { background: rgba(90,58,168,0.18);   color: #b09ae0; }
+  /* Light variants for white-bg cards */
+  .cat-news.light         { background: rgba(26,90,130,0.1);   color: var(--cat-news); }
+  .cat-announcement.light { background: rgba(155,35,53,0.1);   color: var(--cat-announcement); }
+  .cat-behind.light       { background: rgba(42,122,75,0.1);   color: var(--cat-behind); }
+  .cat-community.light    { background: rgba(176,92,47,0.1);   color: var(--cat-community); }
+  .cat-tribute.light      { background: rgba(90,58,168,0.1);   color: var(--cat-tribute); }
+
+  .post-meta { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .post-date { font-size: 0.75rem; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; }
+  .post-date.dark { color: var(--text-muted); }
+  .featured-body h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem,2.5vw,2rem); font-weight: 700; color: #fff; line-height: 1.2; }
+  .post-excerpt { font-size: 0.92rem; line-height: 1.8; color: rgba(255,255,255,0.55); }
+  .post-author { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.25rem; }
+  .author-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--navy-light); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; font-weight: 700; color: var(--gold-light); flex-shrink: 0; }
+  .author-name { font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+  .read-more { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: gap 0.2s; }
+  .read-more:hover { gap: 10px; color: var(--gold-light); }
+
+  /* POST GRID */
+  .posts-section-label { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(13,27,46,0.1); }
+  .posts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+
+  .post-card { background: #fff; border: 1px solid rgba(13,27,46,0.09); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.22s, border-color 0.22s; }
+  .post-card:hover { border-color: rgba(13,27,46,0.2); box-shadow: 0 4px 24px rgba(13,27,46,0.07); }
+  .post-card.placeholder { opacity: 0.45; }
+
+  .post-card-img {
+    width: 100%; height: 180px;
+    background: var(--navy-mid);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; overflow: hidden;
+    /* TO ADD PHOTO: background-image: url('photo.jpg'); background-size: cover; background-position: center; */
+  }
+  .post-card-img .img-ph { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); text-align: center; padding: 1rem; }
+  .post-card-img .img-ph em { display: block; font-style: normal; font-size: 1.5rem; margin-bottom: 0.4rem; }
+
+  .post-card-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; gap: 0.65rem; }
+  .post-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--navy); line-height: 1.25; }
+  .post-card-title.ph { color: rgba(13,27,46,0.28); font-style: italic; }
+  .post-card-excerpt { font-size: 0.85rem; line-height: 1.75; color: var(--text-muted); flex: 1; }
+  .post-card-excerpt.ph { color: rgba(13,27,46,0.25); font-style: italic; }
+  .post-card-footer { padding: 0.9rem 1.5rem; border-top: 1px solid rgba(13,27,46,0.06); display: flex; align-items: center; justify-content: space-between; }
+  .post-card-author { font-size: 0.78rem; color: var(--text-muted); }
+  .post-card-link { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: color 0.15s; }
+  .post-card-link:hover { color: var(--navy); }
+  .post-card-link.ph { color: rgba(13,27,46,0.2); cursor: default; }
+
+  /* PAGINATION */
+  .pagination { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1rem; }
+  .page-btn { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(13,27,46,0.15); font-size: 0.85rem; color: var(--navy); text-decoration: none; transition: all 0.18s; cursor: pointer; background: none; font-family: 'Jost', sans-serif; }
+  .page-btn:hover { border-color: var(--gold); background: var(--gold-pale); }
+  .page-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .page-btn.disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+
+  /* SIDEBAR */
+  .sidebar { display: flex; flex-direction: column; gap: 2rem; position: sticky; top: 130px; }
+  .sidebar-widget { background: #fff; border: 1px solid rgba(13,27,46,0.09); overflow: hidden; }
+  .sidebar-widget.dark { background: var(--navy); border-color: rgba(201,168,76,0.15); }
+  .widget-head { padding: 1.1rem 1.5rem; border-bottom: 1px solid rgba(13,27,46,0.08); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+  .widget-head.light { border-bottom-color: rgba(255,255,255,0.08); }
+
+  .cat-list { list-style: none; }
+  .cat-list li { border-bottom: 1px solid rgba(13,27,46,0.06); }
+  .cat-list li:last-child { border-bottom: none; }
+  .cat-list a { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.5rem; text-decoration: none; font-size: 0.88rem; color: var(--navy); transition: background 0.15s; cursor: pointer; }
+  .cat-list a:hover { background: var(--gold-pale); }
+  .cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .cat-label { flex: 1; }
+  .cat-count { font-size: 0.72rem; color: var(--text-muted); background: rgba(13,27,46,0.06); padding: 0.15rem 0.5rem; }
+
+  .recent-list { list-style: none; }
+  .recent-item { display: flex; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.07); align-items: flex-start; }
+  .recent-item:last-child { border-bottom: none; }
+  .recent-thumb { width: 44px; height: 44px; background: var(--navy-light); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+  .recent-title { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-weight: 600; color: #fff; line-height: 1.3; margin-bottom: 0.2rem; }
+  .recent-date { font-size: 0.7rem; color: rgba(255,255,255,0.32); }
+
+  .widget-body { padding: 1.5rem; }
+  .widget-body p { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 1.25rem; }
+  .widget-body input { width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s; margin-bottom: 0.75rem; }
+  .widget-body input::placeholder { color: rgba(255,255,255,0.28); }
+  .widget-body input:focus { border-color: var(--gold); }
+  .widget-body button { width: 100%; padding: 0.75rem; background: var(--gold); color: var(--navy); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.2s; }
+  .widget-body button:hover { background: var(--gold-light); }
+
+  .follow-body { padding: 1.5rem; }
+  .follow-body p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6; }
+  .follow-btns { display: flex; flex-direction: column; gap: 0.6rem; }
+  .follow-btn { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1rem; border: 1px solid rgba(13,27,46,0.12); font-size: 0.8rem; color: var(--navy); text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+  .follow-btn:hover { border-color: var(--gold); background: var(--gold-pale); }
+
+  footer { background: var(--navy); padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(201,168,76,0.2); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold-light); letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+  .footer-tagline { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1.5rem; }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .footer-links a { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-bottom: 0.5rem; }
+  .footer-legal { font-size: 0.68rem; color: rgba(255,255,255,0.18); max-width: 560px; margin: 0 auto; line-height: 1.6; }
+
+  .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 1000px) {
+    .blog-layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .featured-post { grid-template-columns: 1fr; }
+    .featured-img { min-height: 220px; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .posts-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="stardust_community_players.html" class="nav-logo">
+    <img src="StardustEmblem.png" alt="Stardust Community Players logo" onerror="this.style.display='none'">
+    <div class="nav-logo-text">Stardust Community Players<span>Danvers, MA</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="stardust_community_players.html#mission">About</a></li>
+    <li><a href="michael_armento.html">Michael N. Armento</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="board_of_directors.html">Board</a></li>
+    <li><a href="join_us.html">Join Us</a></li>
+    <li><a href="news.html" class="active">News</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="stars"></div>
+  <p class="hero-eyebrow">Stories from the Stage &amp; Beyond</p>
+  <h1>News &amp; <em>Updates</em></h1>
+  <p class="hero-sub">Announcements, behind-the-scenes moments, community stories, and more.</p>
+  <div class="hero-rule"></div>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" onclick="filterPosts('all',this)">All Posts</button>
+    <button class="filter-btn" onclick="filterPosts('news',this)"><span class="filter-dot" style="background:var(--cat-news)"></span>News</button>
+    <button class="filter-btn" onclick="filterPosts('announcement',this)"><span class="filter-dot" style="background:var(--cat-announcement)"></span>Announcements</button>
+    <button class="filter-btn" onclick="filterPosts('behind',this)"><span class="filter-dot" style="background:var(--cat-behind)"></span>Behind the Scenes</button>
+    <button class="filter-btn" onclick="filterPosts('community',this)"><span class="filter-dot" style="background:var(--cat-community)"></span>Community</button>
+    <button class="filter-btn" onclick="filterPosts('tribute',this)"><span class="filter-dot" style="background:var(--cat-tribute)"></span>Tributes</button>
+  </div>
+</div>
+
+<div class="blog-page">
+  <div class="blog-inner">
+    <div class="blog-layout">
+
+      <!-- POSTS COLUMN -->
+      <div>
+
+        <!-- ════════════════════════════════════
+             FEATURED POST
+             ────────────────────────────────────
+             HOW TO UPDATE:
+             1. Change the category class on .post-cat
+             2. Update the date span
+             3. Replace the h2 title
+             4. Replace the .post-excerpt paragraph
+             5. Change author initials in .author-avatar
+                and name in .author-name
+             6. To add a photo: on .featured-img add
+                style="background-image:url('your-photo.jpg');
+                background-size:cover;background-position:center;"
+                and delete the .img-ph div inside it
+             7. Set href on .read-more to your article page
+        ════════════════════════════════════ -->
+        <div class="featured-post fade-up" data-category="news">
+          <div class="featured-badge">LATEST POST</div>
+          <div class="featured-img">
+            <div class="img-ph">📸 Add a photo here<br><br>On .featured-img add:<br>background-image: url('photo.jpg');<br>background-size: cover;<br>then delete this div.</div>
+          </div>
+          <div class="featured-body">
+            <div class="post-meta">
+              <span class="post-cat cat-news">📰 News</span>
+              <span class="post-date">June 2025</span><!-- ← UPDATE DATE -->
+            </div>
+            <h2>Welcome to Stardust Community Players — We're Just Getting Started</h2><!-- ← UPDATE TITLE -->
+            <p class="post-excerpt">Stardust Community Players is officially up and running! We're thrilled to introduce ourselves to the Danvers community and share a little about who we are, what we're building, and how you can be part of it from the very beginning.</p><!-- ← UPDATE EXCERPT -->
+            <div class="post-author">
+              <div class="author-avatar">BLA</div><!-- ← UPDATE INITIALS -->
+              <span class="author-name">Becky Lemp Ankiewicz</span><!-- ← UPDATE NAME -->
+            </div>
+            <a href="#" class="read-more">Read More →</a><!-- ← UPDATE HREF when article page exists -->
+          </div>
+        </div>
+
+        <!-- ════════════════════════════════════
+             POST GRID
+             ────────────────────────────────────
+             HOW TO ADD A NEW POST:
+             1. Copy one of the .post-card blocks below
+             2. Remove the .placeholder class
+             3. Fill in: category, date, title, excerpt, author
+             4. To add a photo on .post-card-img add:
+                style="background-image:url('photo.jpg');
+                background-size:cover;background-position:center;"
+                and delete the .img-ph div inside it
+             5. Set .post-card-link href to your article page
+             6. Update the sidebar Recent Posts to match
+
+             CATEGORY OPTIONS (on .post-cat element):
+               cat-news           → General org news
+               cat-announcement   → Shows, auditions, big news
+               cat-behind         → Behind the scenes
+               cat-community      → Community stories & spotlights
+               cat-tribute        → Tributes & memories
+             Also add light class on white-bg cards:
+               e.g. class="post-cat cat-news light"
+        ════════════════════════════════════ -->
+        <p class="posts-section-label">All Posts</p>
+        <div class="posts-grid">
+
+          <!-- POST: Real content example -->
+          <div class="post-card fade-up" data-category="announcement">
+            <div class="post-card-img">
+              <!-- TO ADD PHOTO: add style="background-image:url('photo.jpg');background-size:cover;background-position:center;" to .post-card-img and delete this div -->
+              <div class="img-ph"><em>📣</em>Add photo here</div>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="post-cat cat-announcement light">📣 Announcement</span>
+                <span class="post-date dark">June 2025</span><!-- ← UPDATE DATE -->
+              </div>
+              <div class="post-card-title">Our First Fundraiser: The Stardust Craft Fair Is Coming</div><!-- ← UPDATE TITLE -->
+              <p class="post-card-excerpt">We're excited to announce our inaugural fundraising event — a community craft fair featuring local artisans, entertainment, and plenty of fun. Details coming soon!</p><!-- ← UPDATE EXCERPT -->
+            </div>
+            <div class="post-card-footer">
+              <span class="post-card-author">Stardust Team</span><!-- ← UPDATE AUTHOR -->
+              <a href="#" class="post-card-link">Read More →</a><!-- ← UPDATE HREF -->
+            </div>
+          </div>
+
+          <!-- POST: Real content example -->
+          <div class="post-card fade-up" data-category="tribute">
+            <div class="post-card-img">
+              <div class="img-ph"><em>✦</em>Add photo here</div>
+            </div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="post-cat cat-tribute light">✦ Tribute</span>
+                <span class="post-date dark">June 2025</span>
+              </div>
+              <div class="post-card-title">Remembering Uncle Mike: The Legacy Behind Our Name</div>
+              <p class="post-card-excerpt">Stardust Community Players exists because of one extraordinary educator. We share the story of Michael N. Armento and why his memory is woven into everything we do.</p>
+            </div>
+            <div class="post-card-footer">
+              <span class="post-card-author">Becky Lemp Ankiewicz</span>
+              <a href="michael_armento.html" class="post-card-link">Read More →</a>
+            </div>
+          </div>
+
+          <!-- PLACEHOLDER: Behind the Scenes -->
+          <div class="post-card placeholder fade-up" data-category="behind">
+            <div class="post-card-img"><div class="img-ph"><em>🎭</em>Add photo here</div></div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="post-cat cat-behind light" style="opacity:0.5;">🎭 Behind the Scenes</span>
+                <span class="post-date dark" style="opacity:0.4;">Month Year</span>
+              </div>
+              <div class="post-card-title ph">Behind the Scenes post — add title</div>
+              <p class="post-card-excerpt ph">Share rehearsal photos, set construction updates, costume reveals, or any behind-the-scenes moment worth celebrating.</p>
+            </div>
+            <div class="post-card-footer">
+              <span class="post-card-author" style="opacity:0.3;">Author name</span>
+              <span class="post-card-link ph">Coming soon</span>
+            </div>
+          </div>
+
+          <!-- PLACEHOLDER: Community -->
+          <div class="post-card placeholder fade-up" data-category="community">
+            <div class="post-card-img"><div class="img-ph"><em>🤝</em>Add photo here</div></div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="post-cat cat-community light" style="opacity:0.5;">🤝 Community</span>
+                <span class="post-date dark" style="opacity:0.4;">Month Year</span>
+              </div>
+              <div class="post-card-title ph">Community story — add title</div>
+              <p class="post-card-excerpt ph">Spotlight a volunteer, share a member story, recap a community event, or celebrate a milestone together.</p>
+            </div>
+            <div class="post-card-footer">
+              <span class="post-card-author" style="opacity:0.3;">Author name</span>
+              <span class="post-card-link ph">Coming soon</span>
+            </div>
+          </div>
+
+          <!-- PLACEHOLDER: News -->
+          <div class="post-card placeholder fade-up" data-category="news">
+            <div class="post-card-img"><div class="img-ph"><em>📰</em>Add photo here</div></div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="post-cat cat-news light" style="opacity:0.5;">📰 News</span>
+                <span class="post-date dark" style="opacity:0.4;">Month Year</span>
+              </div>
+              <div class="post-card-title ph">News post — add title</div>
+              <p class="post-card-excerpt ph">Share organization updates, season announcements, press mentions, or any general Stardust news.</p>
+            </div>
+            <div class="post-card-footer">
+              <span class="post-card-author" style="opacity:0.3;">Author name</span>
+              <span class="post-card-link ph">Coming soon</span>
+            </div>
+          </div>
+
+          <!-- PLACEHOLDER: Announcement -->
+          <div class="post-card placeholder fade-up" data-category="announcement">
+            <div class="post-card-img"><div class="img-ph"><em>📣</em>Add photo here</div></div>
+            <div class="post-card-body">
+              <div class="post-meta">
+                <span class="post-cat cat-announcement light" style="opacity:0.5;">📣 Announcement</span>
+                <span class="post-date dark" style="opacity:0.4;">Month Year</span>
+              </div>
+              <div class="post-card-title ph">Announcement — add title</div>
+              <p class="post-card-excerpt ph">Use for big announcements — show titles, audition dates, new board members, partnerships, or major milestones.</p>
+            </div>
+            <div class="post-card-footer">
+              <span class="post-card-author" style="opacity:0.3;">Author name</span>
+              <span class="post-card-link ph">Coming soon</span>
+            </div>
+          </div>
+
+        </div>
+        <!-- END POSTS GRID -->
+
+        <div class="pagination fade-up">
+          <button class="page-btn disabled">←</button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <button class="page-btn">→</button>
+        </div>
+
+      </div>
+      <!-- END POSTS COLUMN -->
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <div class="sidebar-widget fade-up">
+          <div class="widget-head">Categories</div>
+          <ul class="cat-list">
+            <li><a onclick="filterPosts('all', document.querySelectorAll('.filter-btn')[0])"><span class="cat-dot" style="background:var(--gold)"></span><span class="cat-label">All Posts</span><span class="cat-count">6</span></a></li>
+            <li><a onclick="filterPosts('news', document.querySelectorAll('.filter-btn')[1])"><span class="cat-dot" style="background:var(--cat-news)"></span><span class="cat-label">News</span><span class="cat-count">2</span></a></li>
+            <li><a onclick="filterPosts('announcement', document.querySelectorAll('.filter-btn')[2])"><span class="cat-dot" style="background:var(--cat-announcement)"></span><span class="cat-label">Announcements</span><span class="cat-count">2</span></a></li>
+            <li><a onclick="filterPosts('behind', document.querySelectorAll('.filter-btn')[3])"><span class="cat-dot" style="background:var(--cat-behind)"></span><span class="cat-label">Behind the Scenes</span><span class="cat-count">1</span></a></li>
+            <li><a onclick="filterPosts('community', document.querySelectorAll('.filter-btn')[4])"><span class="cat-dot" style="background:var(--cat-community)"></span><span class="cat-label">Community</span><span class="cat-count">1</span></a></li>
+            <li><a onclick="filterPosts('tribute', document.querySelectorAll('.filter-btn')[5])"><span class="cat-dot" style="background:var(--cat-tribute)"></span><span class="cat-label">Tributes</span><span class="cat-count">1</span></a></li>
+          </ul>
+        </div>
+
+        <!-- ════════════════════════════════════
+             RECENT POSTS SIDEBAR WIDGET
+             Update this list each time you publish
+             a new post — add a new .recent-item
+             at the top and remove the oldest one.
+        ════════════════════════════════════ -->
+        <div class="sidebar-widget dark fade-up">
+          <div class="widget-head light">Recent Posts</div>
+          <ul class="recent-list">
+            <li class="recent-item">
+              <div class="recent-thumb">📰</div>
+              <div>
+                <div class="recent-title">Welcome to Stardust Community Players</div>
+                <div class="recent-date">June 2025</div>
+              </div>
+            </li>
+            <li class="recent-item">
+              <div class="recent-thumb">📣</div>
+              <div>
+                <div class="recent-title">The Stardust Craft Fair Is Coming</div>
+                <div class="recent-date">June 2025</div>
+              </div>
+            </li>
+            <li class="recent-item">
+              <div class="recent-thumb">✦</div>
+              <div>
+                <div class="recent-title">Remembering Uncle Mike</div>
+                <div class="recent-date">June 2025</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-widget dark fade-up">
+          <div class="widget-head light">Stay in the Loop</div>
+          <div class="widget-body">
+            <p>Get new posts, show announcements, and audition news delivered to your inbox.</p>
+            <input type="email" placeholder="your@email.com">
+            <button onclick="alert('In the live site this will subscribe you to Stardust updates!')">Subscribe</button>
+          </div>
+        </div>
+
+        <div class="sidebar-widget fade-up">
+          <div class="widget-head">Follow Us</div>
+          <div class="follow-body">
+            <p>Stay connected with Stardust on social media for the latest updates.</p>
+            <div class="follow-btns">
+              <a href="https://www.facebook.com/profile.php?id=61584057985324" target="_blank" class="follow-btn">📘 Follow on Facebook</a>
+              <a href="https://www.instagram.com/stardustcommunityplayersma/" target="_blank" class="follow-btn">📸 Follow on Instagram</a>
+              <a href="mailto:stardustcommunityplayers@gmail.com" class="follow-btn">✉️ Email Us</a>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Stardust Community Players</div>
+    <div class="footer-links">
+    <a href="stardust_community_players.html#mission">About</a>
+    <a href="michael_armento.html">Michael N. Armento</a>
+    <a href="board_of_directors.html">Board</a>
+    <a href="events.html">Events</a>
+    <a href="join_us.html">Join Us</a>
+    <a href="news.html">News</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Stardust Community Players · Honoring a Legacy Through the Performing Arts · Danvers, MA · Contact: 978-335-5230 | Stardustcommunityplayers@gmail.com</div>
+  <div class="footer-legal">Stardust Community Players is a registered 501(c)(3) non-profit public charity. All donations are tax-deductible to the extent allowed by law. EIN: 88-4230063 · MA SEC Corp ID: 001884520</div>
+</footer>
+
+<script>
+  function filterPosts(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn && btn.classList && btn.classList.contains('filter-btn')) btn.classList.add('active');
+    document.querySelectorAll('[data-category]').forEach(card => {
+      card.style.display = (category === 'all' || card.dataset.category === category) ? '' : 'none';
+    });
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
