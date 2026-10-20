@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Join Stardust Community Players for Frost & Foliage, a November market celebrating local artisans and handmade New England crafts in Danvers, Massachusetts.">
+<title>Frost &amp; Foliage — Stardust Community Players</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0d1b2e;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #faf7f0;
+    --text-dark: #1a1a2e;
+    --text-muted: #5a6a82;
+    --berry: #481525;
+    --berry-deep: #2b1020;
+    --leaf: #68774a;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,27,46,0.97); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 68px; border-bottom: 1px solid rgba(201,168,76,0.25);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { height: 44px; width: 44px; object-fit: contain; border-radius: 50%; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.04em; line-height: 1.2; }
+  .nav-logo-text span { display: block; font-weight: 400; font-size: 0.75rem; color: rgba(232,201,122,0.65); letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+
+  .hero {
+    min-height: 650px; padding: 116px max(2rem, calc((100vw - 1100px) / 2)) 4rem;
+    background: var(--berry-deep); color: white; display: grid; grid-template-columns: 1fr 330px;
+    align-items: center; gap: 4rem; position: relative; overflow: hidden;
+  }
+  .hero::before, .hero::after { content: ''; position: absolute; width: 360px; height: 360px; border: 1px solid rgba(232,201,122,0.12); border-radius: 50%; pointer-events: none; }
+  .hero::before { top: -230px; left: -130px; }
+  .hero::after { bottom: -250px; right: 22%; }
+  .hero-copy { position: relative; z-index: 1; max-width: 620px; }
+  .eyebrow { color: var(--gold-light); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 1.25rem; }
+  h1 { color: #fff; font-family: 'Cormorant Garamond', serif; font-size: 4.6rem; line-height: 0.98; font-weight: 700; margin-bottom: 0.8rem; }
+  h1 em { color: #f0bd67; font-weight: 400; }
+  .hero-kicker { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-style: italic; color: #f0bd67; margin-bottom: 1.5rem; }
+  .hero-intro { max-width: 510px; color: rgba(255,255,255,0.74); font-size: 1rem; line-height: 1.8; margin-bottom: 2rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; }
+  .button-gold { display: inline-block; padding: 0.85rem 1.4rem; background: var(--gold); color: var(--navy); font-size: 0.76rem; font-weight: 600; letter-spacing: 0.1em; text-decoration: none; text-transform: uppercase; transition: background 0.2s; }
+  .button-gold:hover { background: var(--gold-light); }
+  .hero-back { color: rgba(255,255,255,0.75); font-size: 0.84rem; text-decoration-color: rgba(255,255,255,0.35); text-underline-offset: 4px; }
+  .hero-poster { position: relative; z-index: 1; width: 100%; aspect-ratio: 0.68; object-fit: cover; object-position: center; border: 5px solid rgba(255,255,255,0.1); box-shadow: 0 22px 60px rgba(0,0,0,0.35); }
+
+  .event-details { background: #fff; border-bottom: 1px solid rgba(13,27,46,0.1); }
+  .details-inner { max-width: 1100px; margin: 0 auto; padding: 1.7rem 2rem; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .detail { padding: 0.2rem 1.5rem; border-right: 1px solid rgba(13,27,46,0.12); }
+  .detail:first-child { padding-left: 0; }
+  .detail:last-child { border-right: 0; }
+  .detail-label { color: var(--leaf); display: block; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .detail-value { color: var(--navy); font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; line-height: 1.35; }
+  .detail-value a { color: inherit; text-decoration-color: rgba(13,27,46,0.35); text-underline-offset: 3px; }
+
+  .vendors { padding: 5.5rem 2rem 6rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label { color: #8b562f; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .section-title { color: var(--navy); font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 600; line-height: 1.05; margin-bottom: 0.8rem; }
+  .section-title em { color: #8b562f; font-weight: 400; }
+  .section-intro { color: var(--text-muted); font-size: 0.98rem; line-height: 1.75; max-width: 620px; margin-bottom: 2.5rem; }
+  .vendor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .vendor-card { background: #fff; border: 1px solid rgba(13,27,46,0.11); min-width: 0; }
+  .vendor-photo { aspect-ratio: 1.2; display: grid; place-items: center; position: relative; overflow: hidden; background: #e8dfd0; }
+  .vendor-photo::before, .vendor-photo::after { content: ''; position: absolute; border-radius: 50%; border: 1px solid rgba(72,21,37,0.2); }
+  .vendor-photo::before { width: 190px; height: 190px; }
+  .vendor-photo::after { width: 145px; height: 145px; }
+  .vendor-photo span { position: relative; z-index: 1; padding: 0.45rem 0.65rem; background: rgba(250,247,240,0.86); color: #674b3c; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .vendor-photo.photo-two { background: #e4ddd1; }
+  .vendor-photo.photo-two::before, .vendor-photo.photo-two::after { border-color: rgba(104,119,74,0.27); }
+  .vendor-photo.photo-three { background: #ead8ce; }
+  .vendor-photo.photo-three::before, .vendor-photo.photo-three::after { border-color: rgba(139,86,47,0.25); }
+  .vendor-body { padding: 1.2rem 1.3rem 1.35rem; }
+  .vendor-type { color: #8b562f; font-size: 0.63rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.35rem; }
+  .vendor-name { color: var(--navy); font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 600; margin-bottom: 0.35rem; }
+  .vendor-description { color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; min-height: 2.8em; }
+  .vendor-link-placeholder { display: inline-block; color: var(--berry); font-size: 0.77rem; font-weight: 600; margin-top: 1rem; text-decoration: underline; text-decoration-color: rgba(72,21,37,0.35); text-underline-offset: 4px; }
+  .vendor-note { margin-top: 1.5rem; color: #766d60; font-size: 0.8rem; line-height: 1.6; }
+
+  .closing { padding: 3.5rem 2rem; background: var(--berry); color: #fff; text-align: center; }
+  .closing h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; margin-bottom: 0.6rem; }
+  .closing p { color: rgba(255,255,255,0.72); font-size: 0.9rem; line-height: 1.7; }
+  .closing a { color: var(--gold-light); text-underline-offset: 3px; }
+
+  footer { background: var(--navy); padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(201,168,76,0.2); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold-light); letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+  .footer-tagline { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1.5rem; }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; list-style: none; }
+  .footer-links a { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-bottom: 0.5rem; }
+  .footer-legal { font-size: 0.68rem; color: rgba(255,255,255,0.18); max-width: 560px; margin: 0 auto; line-height: 1.6; }
+  .givebutter-wrap { display: flex; justify-content: center; margin-top: 1rem; }
+  .givebutter-wrap givebutter-widget { display: block; width: min(210px, 100%); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero { min-height: 0; grid-template-columns: 1fr 250px; gap: 2rem; padding: 112px 2rem 3rem; }
+    h1 { font-size: 3.7rem; }
+    .details-inner { padding-inline: 1.5rem; }
+  }
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; gap: 2rem; padding: 104px 1.35rem 2.5rem; }
+    h1 { font-size: 3.25rem; }
+    .hero-kicker { font-size: 1.4rem; }
+    .hero-poster { width: min(250px, 78%); justify-self: center; }
+    .details-inner { grid-template-columns: 1fr; gap: 0.9rem; padding: 1.2rem 1.35rem; }
+    .detail, .detail:first-child { padding: 0 0 0.8rem; border-right: 0; border-bottom: 1px solid rgba(13,27,46,0.12); }
+    .detail:last-child { padding-bottom: 0; border-bottom: 0; }
+    .vendors { padding: 4rem 1.35rem; }
+    .section-title { font-size: 2.5rem; }
+    .vendor-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .vendor-photo { aspect-ratio: 1.55; }
+    .footer-links { gap: 1rem 1.4rem; }
+  }
+</style>
+<script async src="https://widgets.givebutter.com/latest.umd.cjs?acct=6xx9bnKxlUvggCiJ&p=other"></script>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <img src="../img/StardustEmblem.png" alt="Stardust Community Players logo">
+    <div class="nav-logo-text">Stardust Community Players<span>Danvers, MA</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#mission">About</a></li>
+    <li><a href="../michael_armento.html">Michael N. Armento</a></li>
+    <li><a href="../events.html" class="active">Events</a></li>
+    <li><a href="../board_of_directors.html">Board</a></li>
+    <li><a href="../join_us.html">Join Us</a></li>
+    <li><a href="../news.html">News</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="hero" aria-labelledby="fair-title">
+    <div class="hero-copy">
+      <p class="eyebrow">The Stardust November Market</p>
+      <h1 id="fair-title">Frost <em>&amp;</em><br>Foliage</h1>
+      <p class="hero-kicker">A gathering of handmade things and local makers</p>
+      <p class="hero-intro">Warm up with handmade crafts and New England artistry. Meet local artisans, find thoughtful gifts, enjoy refreshments, and support Stardust Community Players.</p>
+      <div class="hero-actions">
+        <a class="button-gold" href="#vendors">Meet the Makers</a>
+        <a class="hero-back" href="../events.html">Back to all events</a>
+      </div>
+    </div>
+    <img class="hero-poster" src="Fall%20Craft%20Fair%20Layout%20Version%20(1).png" alt="Frost & Foliage November market flyer with autumn leaves and event details">
+  </section>
+
+  <section class="event-details" aria-label="Event details">
+    <div class="details-inner">
+      <div class="detail"><span class="detail-label">When</span><span class="detail-value">November 14, 2026<br>10 AM – 2 PM</span></div>
+      <div class="detail"><span class="detail-label">Where</span><span class="detail-value"><a href="https://maps.google.com/?q=Holy+Trinity+United+Methodist+Church,+16+Sylvan+St,+Danvers,+MA">Holy Trinity United Methodist Church<br>16 Sylvan St, Danvers, MA</a></span></div>
+      <div class="detail"><span class="detail-label">Admission</span><span class="detail-value">Free admission<br>All are welcome</span></div>
+    </div>
+  </section>
+
+  <section class="vendors" id="vendors" aria-labelledby="vendors-title">
+    <div class="section-inner">
+      <p class="section-label">Local Artisans · Handmade Gifts · New England Artistry</p>
+      <h2 class="section-title" id="vendors-title">Meet the <em>Makers</em></h2>
+      <p class="section-intro">We’re getting to know the artists and makers joining us this November. Vendor spotlights will appear here as the lineup is confirmed.</p>
+      <div class="vendor-grid">
+        <article class="vendor-card">
+          <div class="vendor-photo"><span>Vendor wares photo</span></div>
+          <div class="vendor-body">
+            <p class="vendor-type">Vendor category</p>
+            <h3 class="vendor-name">Vendor Name</h3>
+            <p class="vendor-description">A short introduction to their handmade work will go here.</p>
+            <span class="vendor-link-placeholder">Website or social link</span>
+          </div>
+        </article>
+        <article class="vendor-card">
+          <div class="vendor-photo photo-two"><span>Vendor wares photo</span></div>
+          <div class="vendor-body">
+            <p class="vendor-type">Vendor category</p>
+            <h3 class="vendor-name">Vendor Name</h3>
+            <p class="vendor-description">A short introduction to their handmade work will go here.</p>
+            <span class="vendor-link-placeholder">Website or social link</span>
+          </div>
+        </article>
+        <article class="vendor-card">
+          <div class="vendor-photo photo-three"><span>Vendor wares photo</span></div>
+          <div class="vendor-body">
+            <p class="vendor-type">Vendor category</p>
+            <h3 class="vendor-name">Vendor Name</h3>
+            <p class="vendor-description">A short introduction to their handmade work will go here.</p>
+            <span class="vendor-link-placeholder">Website or social link</span>
+          </div>
+        </article>
+      </div>
+      <p class="vendor-note">These are sample layout tiles. Replace each placeholder with the vendor’s name, a brief description, product photos, and website or social links.</p>
+    </div>
+  </section>
+
+  <section class="closing">
+    <h2>A market with a little extra meaning</h2>
+    <p>Frost &amp; Foliage benefits Stardust Community Players.<br>Questions? <a href="mailto:board@stardustcommunityplayers.org">Contact the Stardust team</a>.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-logo">Stardust Community Players</div>
+  <ul class="footer-links">
+    <li><a href="../index.html#mission">About</a></li>
+    <li><a href="../michael_armento.html">Michael N. Armento</a></li>
+    <li><a href="../board_of_directors.html">Board</a></li>
+    <li><a href="../events.html">Events</a></li>
+    <li><a href="../join_us.html">Join Us</a></li>
+    <li><a href="../news.html">News</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Stardust Community Players · Honoring a Legacy Through the Performing Arts · Danvers, MA · Contact: 978-335-5230 | board@stardustcommunityplayers.org</div>
+  <div class="footer-legal">Stardust Community Players is a registered 501(c)(3) non-profit public charity. All donations are tax-deductible to the extent allowed by law. EIN: 88-4230063 · MA SEC Corp ID: 001884520</div>
+  <div class="givebutter-wrap"><givebutter-widget id="L0yVMY"></givebutter-widget></div>
+</footer>
+</body>
+</html>
