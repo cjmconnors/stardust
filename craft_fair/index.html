@@ -87,6 +87,11 @@
   .vendor-name { color: var(--navy); font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 600; margin-bottom: 0.35rem; }
   .vendor-description { color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; min-height: 2.8em; }
   .vendor-link-placeholder { display: inline-block; color: var(--berry); font-size: 0.77rem; font-weight: 600; margin-top: 1rem; text-decoration: underline; text-decoration-color: rgba(72,21,37,0.35); text-underline-offset: 4px; }
+  .vendor-photo.has-image { aspect-ratio: 1; background: #e8dfd0; }
+  .vendor-photo.has-image::before, .vendor-photo.has-image::after { display: none; }
+  .vendor-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .vendor-link { display: inline-block; color: var(--berry); font-size: 0.77rem; font-weight: 600; margin-top: 1rem; text-decoration: underline; text-decoration-color: rgba(72,21,37,0.35); text-underline-offset: 4px; }
+  .vendor-link:hover { text-decoration-color: var(--berry); }
   .vendor-note { margin-top: 1.5rem; color: #766d60; font-size: 0.8rem; line-height: 1.6; }
 
   .closing { padding: 3.5rem 2rem; background: var(--berry); color: #fff; text-align: center; }
@@ -124,6 +129,7 @@
     .section-title { font-size: 2.5rem; }
     .vendor-grid { grid-template-columns: 1fr; gap: 1rem; }
     .vendor-photo { aspect-ratio: 1.55; }
+    .vendor-photo.has-image { aspect-ratio: 1.2; }
     .footer-links { gap: 1rem 1.4rem; }
   }
 </style>
@@ -173,37 +179,60 @@
     <div class="section-inner">
       <p class="section-label">Local Artisans · Handmade Gifts · New England Artistry</p>
       <h2 class="section-title" id="vendors-title">Meet the <em>Makers</em></h2>
-      <p class="section-intro">We’re getting to know the artists and makers joining us this November. Vendor spotlights will appear here as the lineup is confirmed.</p>
+      <p class="section-intro">Meet some of the artists and makers joining us this November.</p>
       <div class="vendor-grid">
         <article class="vendor-card">
-          <div class="vendor-photo"><span>Vendor wares photo</span></div>
+          <div class="vendor-photo has-image"><img src="vendors/bagbags.jpg" alt="Stack of colorful patterned fabric pouches" loading="lazy" width="800" height="800"></div>
           <div class="vendor-body">
-            <p class="vendor-type">Vendor category</p>
-            <h3 class="vendor-name">Vendor Name</h3>
-            <p class="vendor-description">A short introduction to their handmade work will go here.</p>
-            <span class="vendor-link-placeholder">Website or social link</span>
+            <p class="vendor-type">Bags</p>
+            <h3 class="vendor-name">Bagbags</h3>
+            <p class="vendor-description">Fabric bags and pouches, 7 × 7 inches, for what have you.</p>
           </div>
         </article>
         <article class="vendor-card">
-          <div class="vendor-photo photo-two"><span>Vendor wares photo</span></div>
+          <div class="vendor-photo has-image"><img src="vendors/cozy-by-amy.jpg" alt="Chunky knit blanket in rose, cream and sage stripes" loading="lazy" width="800" height="800"></div>
           <div class="vendor-body">
-            <p class="vendor-type">Vendor category</p>
-            <h3 class="vendor-name">Vendor Name</h3>
-            <p class="vendor-description">A short introduction to their handmade work will go here.</p>
-            <span class="vendor-link-placeholder">Website or social link</span>
+            <p class="vendor-type">Knits</p>
+            <h3 class="vendor-name">Cozy by Amy</h3>
+            <p class="vendor-description">Chunky knit blankets, pillows, home decor and plushies.</p>
+            <a class="vendor-link" href="https://www.instagram.com/cozybyamy/" target="_blank" rel="noopener">Instagram @cozybyamy</a>
           </div>
         </article>
         <article class="vendor-card">
-          <div class="vendor-photo photo-three"><span>Vendor wares photo</span></div>
+          <div class="vendor-photo has-image"><img src="vendors/crafty-pawz.jpg" alt="Crocheted goose plushie wearing a blue hat" loading="lazy" width="800" height="800"></div>
           <div class="vendor-body">
-            <p class="vendor-type">Vendor category</p>
-            <h3 class="vendor-name">Vendor Name</h3>
-            <p class="vendor-description">A short introduction to their handmade work will go here.</p>
-            <span class="vendor-link-placeholder">Website or social link</span>
+            <p class="vendor-type">Crochet</p>
+            <h3 class="vendor-name">Crafty Pawz</h3>
+            <p class="vendor-description">Assorted plushies, stuffed animals and keychains — all crocheted!</p>
+          </div>
+        </article>
+        <article class="vendor-card">
+          <div class="vendor-photo has-image"><img src="vendors/merry-kitshmas.jpg" alt="Vintage Christmas diorama with a drummer figurine and tinsel tree" loading="lazy" width="800" height="800"></div>
+          <div class="vendor-body">
+            <p class="vendor-type">Decor · Christmas</p>
+            <h3 class="vendor-name">Merry Kitshmas</h3>
+            <p class="vendor-description">Kitschy seasonal decor made from vintage ceramics, tins, ornaments and other vintage ephemera.</p>
+          </div>
+        </article>
+        <article class="vendor-card">
+          <div class="vendor-photo has-image"><img src="vendors/needful-things-thrift.jpg" alt="Rows of wire-wrapped crystal rings" loading="lazy" width="800" height="800"></div>
+          <div class="vendor-body">
+            <p class="vendor-type">Jewelry</p>
+            <h3 class="vendor-name">Needful Things Thrift</h3>
+            <p class="vendor-description">One-of-a-kind handmade jewelry made with love in Boston — wire-wrapped boho crystal pieces for anyone. Women-owned and proud!</p>
+            <a class="vendor-link" href="https://www.instagram.com/needful.things.thrift/" target="_blank" rel="noopener">Instagram @needful.things.thrift</a>
+          </div>
+        </article>
+        <article class="vendor-card">
+          <div class="vendor-photo has-image"><img src="vendors/smoky-topaz.jpg" alt="Display of handmade earrings and necklaces" loading="lazy" width="800" height="800"></div>
+          <div class="vendor-body">
+            <p class="vendor-type">Jewelry · Decor · Gift Baskets</p>
+            <h3 class="vendor-name">Smoky Topaz</h3>
+            <p class="vendor-description">Jewelry, home decor gifts and Christmas gift baskets!</p>
           </div>
         </article>
       </div>
-      <p class="vendor-note">These are sample layout tiles. Replace each placeholder with the vendor’s name, a brief description, product photos, and website or social links.</p>
+      <p class="vendor-note">And more makers to discover at the market!</p>
     </div>
   </section>
 
